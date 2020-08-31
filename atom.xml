@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
     <title>Yunmo&apos; Blog</title>
-    <updated>2020-08-31T08:34:49.036Z</updated>
+    <updated>2020-08-31T08:42:12.822Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
@@ -16,9 +16,9 @@
         <link href="https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
         </link>
         <updated>2020-08-31T05:55:53.000Z</updated>
-        <summary type="html"><![CDATA[<p><img src="https://blog.yunmo.org.cn/post-images/1598862873985.jpeg" alt="" loading="lazy">MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
+        <summary type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p><img src="https://blog.yunmo.org.cn/post-images/1598862873985.jpeg" alt="" loading="lazy">MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
+        <content type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
 <!-- more -->
 <blockquote>
 <p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
