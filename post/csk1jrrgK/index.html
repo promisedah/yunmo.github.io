@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>基于浏览器的视频通话如何实现网络穿透找到内网目标地址？ | Yunmo&#39; Blog</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1598858997870">
+<link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被..." />
+    <meta name="keywords" content="WebRTC" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://blog.yunmo.org.cn">
+        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1598858997870" class="site-logo">
+        <h1 class="site-title">Yunmo&#39; Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">基于浏览器的视频通话如何实现网络穿透找到内网目标地址？</h2>
+            <div class="post-date">2020-08-30 14:08</div>
+            
+            <div class="post-content" v-pre>
+              <p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
+<!-- more -->
+<h2 id="首先你需要一台公网ip的服务器">首先你需要一台公网ip的服务器</h2>
+<h3 id="基于coturn项目的stunturn服务器搭建">基于coturn项目的stun/turn服务器搭建</h3>
+<!-- more -->
+<p>通过stun/turn中继服务器，我们就可以通过公网IP地址来解析找到发起请求的内网IP地址（即：躲在路由器或交换机后的电脑）</p>
+<p>我这边采用<a href="https://peerjs.com/">PeerJs</a>库来建立P2P数据或媒体流连接。</p>
+<p>实际测试，中继服务器还是会存在找不到内网地址的情况。</p>
+<h3 id="经过调试webrtc已成功建立连接的浏览器有">经过调试WebRTC已成功建立连接的浏览器有：</h3>
+<!-- more -->
+<blockquote>
+<p>PC to PC:<br>
+Chrome to Chrome</p>
+</blockquote>
+<blockquote>
+<p>PC to Mobile（IOS）:<br>
+Chrome to Safari</p>
+</blockquote>
+<blockquote>
+<p>PC to  Mobile（Android）:<br>
+Chrome to Chrome</p>
+</blockquote>
+<!-- more -->
+<h3 id="coturn安装">coturn安装</h3>
+<blockquote>
+<p>首先从git仓库clone下来</p>
+</blockquote>
+<pre><code>git clone https://github.com/coturn/coturn.git
+</code></pre>
+<blockquote>
+<p>编译安装</p>
+</blockquote>
+<pre><code>./configure --prefix=/usr/local/coturn make &amp; sudo make install
+</code></pre>
+<blockquote>
+<p>命令模式启动服务</p>
+</blockquote>
+<pre><code>turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=your.name:your.passwod -r your.domain -L your.ip
+</code></pre>
+<p>例：</p>
+<pre><code>./turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=yunmo:123 -r yunmo.org.cn -L 172.19.189.21
+</code></pre>
+<blockquote>
+<p>-o 以守护进程模式运行（后台运行）<br>
+-v 日志会以“适度详细”的程度来记录<br>
+-f  增加指纹机制<br>
+-a 长期验证机制<br>
+-m 以x个进程来处理中继请求<br>
+--max-bps 带宽<br>
+--min-port   起始用的最小端口<br>
+--max-port   最大端口号<br>
+--user=帐号：密码 (turn服务的用户验证机制要用)<br>
+-r  域名<br>
+-L 监听IP(turn服务器的ip)这个ip是你ifconfig查到的ip，不是你的公网ip<br>
+-X   后面加 public ip/ private ip       多IP情况下使用，有几个ip就用几次</p>
+</blockquote>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://blog.yunmo.org.cn/tag/webrtc/" class="tag">
+                    WebRTC
+                  </a>
+                
+              </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

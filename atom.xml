@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
     <title>Yunmo&apos; Blog</title>
-    <updated>2020-08-31T05:09:20.464Z</updated>
+    <updated>2020-08-31T07:30:00.069Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
@@ -11,35 +11,115 @@
     <icon>https://blog.yunmo.org.cn/favicon.ico</icon>
     <rights>All rights reserved 2020, Yunmo&apos; Blog</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://blog.yunmo.org.cn/post/hello-gridea/</id>
-        <link href="https://blog.yunmo.org.cn/post/hello-gridea/">
+        <title type="html"><![CDATA[MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？]]></title>
+        <id>https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/</id>
+        <link href="https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <updated>2020-08-31T05:55:53.000Z</updated>
+        <summary type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <content type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<blockquote>
+<p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
+</blockquote>
+<blockquote>
+<p>⚠️注意：远程连接记得开放服务器mysql远程端口。</p>
+</blockquote>
+<blockquote>
+<p>如：添加一个用户名为db_user，密码为db_pass，授权为% （%表示所有外围IP能连接）对db_name数据库所有权限</p>
+</blockquote>
+<!-- more -->
+<p>命令如下:</p>
+<pre><code>mysql -uroot -p
+
+Enter password: #输入数据库的root密码，默认不显示密码
+
+MySQL [(none)]&gt; grant all privileges on db_name.* to db_user@'%' identified 
+by 'db_pass'; #授权语句，特别注意有分号
+
+MySQL [(none)]&gt; flush privileges; #权限立即生效
+
+MySQL [(none)]&gt; exit; #退出数据库控制台，特别注意有分号
+
+</code></pre>
+<p>例：</p>
+<!-- more --> 
+<pre><code>grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
+
+flush privileges;
+
+exit;
+
+</code></pre>
+<!-- more -->
+<p>😘 现在就可以用刚才创建的用户去连接啦~</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[基于浏览器的视频通话如何实现网络穿透找到内网目标地址？]]></title>
+        <id>https://blog.yunmo.org.cn/post/csk1jrrgK/</id>
+        <link href="https://blog.yunmo.org.cn/post/csk1jrrgK/">
+        </link>
+        <updated>2020-08-30T06:45:06.000Z</updated>
+        <summary type="html"><![CDATA[<p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
+<!-- more -->
+<h2 id="首先你需要一台公网ip的服务器">首先你需要一台公网ip的服务器</h2>
+<h3 id="基于coturn项目的stunturn服务器搭建">基于coturn项目的stun/turn服务器搭建</h3>
+<!-- more -->
+<p>通过stun/turn中继服务器，我们就可以通过公网IP地址来解析找到发起请求的内网IP地址（即：躲在路由器或交换机后的电脑）</p>
+<p>我这边采用<a href="https://peerjs.com/">PeerJs</a>库来建立P2P数据或媒体流连接。</p>
+<p>实际测试，中继服务器还是会存在找不到内网地址的情况。</p>
+<h3 id="经过调试webrtc已成功建立连接的浏览器有">经过调试WebRTC已成功建立连接的浏览器有：</h3>
+<!-- more -->
+<blockquote>
+<p>PC to PC:<br>
+Chrome to Chrome</p>
+</blockquote>
+<blockquote>
+<p>PC to Mobile（IOS）:<br>
+Chrome to Safari</p>
+</blockquote>
+<blockquote>
+<p>PC to  Mobile（Android）:<br>
+Chrome to Chrome</p>
+</blockquote>
+<!-- more -->
+<h3 id="coturn安装">coturn安装</h3>
+<blockquote>
+<p>首先从git仓库clone下来</p>
+</blockquote>
+<pre><code>git clone https://github.com/coturn/coturn.git
+</code></pre>
+<blockquote>
+<p>编译安装</p>
+</blockquote>
+<pre><code>./configure --prefix=/usr/local/coturn make &amp; sudo make install
+</code></pre>
+<blockquote>
+<p>命令模式启动服务</p>
+</blockquote>
+<pre><code>turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=your.name:your.passwod -r your.domain -L your.ip
+</code></pre>
+<p>例：</p>
+<pre><code>./turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=yunmo:123 -r yunmo.org.cn -L 172.19.189.21
+</code></pre>
+<blockquote>
+<p>-o 以守护进程模式运行（后台运行）<br>
+-v 日志会以“适度详细”的程度来记录<br>
+-f  增加指纹机制<br>
+-a 长期验证机制<br>
+-m 以x个进程来处理中继请求<br>
+--max-bps 带宽<br>
+--min-port   起始用的最小端口<br>
+--max-port   最大端口号<br>
+--user=帐号：密码 (turn服务的用户验证机制要用)<br>
+-r  域名<br>
+-L 监听IP(turn服务器的ip)这个ip是你ifconfig查到的ip，不是你的公网ip<br>
+-X   后面加 public ip/ private ip       多IP情况下使用，有几个ip就用几次</p>
+</blockquote>
 ]]></content>
     </entry>
 </feed>
