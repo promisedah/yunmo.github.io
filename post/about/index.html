@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
 
     <meta name="description" content="
@@ -101,7 +101,8 @@
       温故而知新，见贤思齐焉，见不贤而内自省也
     </div>
     <div class="site-footer">
-      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a> | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>
+      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a>
+<!--        | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>-->
     </div>
   </div>
 </div>
@@ -132,13 +133,21 @@
             
 
             
-
+			
+				<div id="vcomments"></div>
           </div>
 
         </div>
       </div>
     </div>
 
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '<TQ68bkDunqiY78ozjQK7kLrX>',
+            appKey: '<0itQcytPBGHG6eLijcqIox01 >'
+        })
+    </script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script type="application/javascript">
 
