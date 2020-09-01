@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1598866695205">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1598953169287">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
 
@@ -28,7 +28,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://blog.yunmo.org.cn">
-        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1598866695205" class="site-logo">
+        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1598953169287" class="site-logo">
         <h1 class="site-title">Yunmo&#39; Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -101,6 +101,11 @@
           <div class="post-detail">
             <h2 class="post-title">基于浏览器的视频通话如何实现网络穿透找到内网目标地址？</h2>
             <div class="post-date">2020-08-30 14:08</div>
+			<!-- id 将作为查询条件 -->
+			<span id="/post/csk1jrrgK" class="leancloud_visitors" data-flag-title="基于浏览器的视频通话如何实现网络穿透找到内网目标地址？">
+				<em class="post-meta-item-text">阅读量</em>
+				<i class="leancloud-visitors-count">loading</i>
+			</span>
             
             <div class="post-content" v-pre>
               <p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
@@ -175,21 +180,12 @@ cd ~/path #进去clone项目地址根目录
             
 
             
-			
 				<div id="vcomments"></div>
           </div>
 
         </div>
       </div>
     </div>
-
-    <script>
-        new Valine({
-            el: '#vcomments',
-            appId: '<TQ68bkDunqiY78ozjQK7kLrX>',
-            appKey: '<0itQcytPBGHG6eLijcqIox01 >'
-        })
-    </script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script type="application/javascript">
 
@@ -216,3 +212,13 @@ var app = new Vue({
 
   </body>
 </html>
+<script type="application/javascript">
+  new Valine({
+    el: '#vcomments',
+    appId: 'TQ68bkDunqiY78ozjQK7kLrX-gzGzoHsz',
+    appKey: '0itQcytPBGHG6eLijcqIox01',
+    visitor: true, // 阅读量统计
+    placeholder: '请输入留言...'
+  })
+</script>
+

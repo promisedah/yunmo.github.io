@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1598866695205">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1598953169287">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
 
@@ -35,7 +35,7 @@ Gridea 主页
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://blog.yunmo.org.cn">
-        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1598866695205" class="site-logo">
+        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1598953169287" class="site-logo">
         <h1 class="site-title">Yunmo&#39; Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -108,6 +108,11 @@ Gridea 主页
           <div class="post-detail">
             <h2 class="post-title">Hello Gridea</h2>
             <div class="post-date">2018-12-12 00:12</div>
+			<!-- id 将作为查询条件 -->
+			<span id="/post/hello-gridea" class="leancloud_visitors" data-flag-title="Hello Gridea">
+				<em class="post-meta-item-text">阅读量</em>
+				<i class="leancloud-visitors-count">loading</i>
+			</span>
             
               <div class="feature-container" style="background-image: url('https://blog.yunmo.org.cn/post-images/hello-gridea.png')">
               </div>
@@ -148,21 +153,12 @@ Gridea 主页
             
 
             
-			
 				<div id="vcomments"></div>
           </div>
 
         </div>
       </div>
     </div>
-
-    <script>
-        new Valine({
-            el: '#vcomments',
-            appId: '<TQ68bkDunqiY78ozjQK7kLrX>',
-            appKey: '<0itQcytPBGHG6eLijcqIox01 >'
-        })
-    </script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script type="application/javascript">
 
@@ -189,3 +185,13 @@ var app = new Vue({
 
   </body>
 </html>
+<script type="application/javascript">
+  new Valine({
+    el: '#vcomments',
+    appId: 'TQ68bkDunqiY78ozjQK7kLrX-gzGzoHsz',
+    appKey: '0itQcytPBGHG6eLijcqIox01',
+    visitor: true, // 阅读量统计
+    placeholder: '请输入留言...'
+  })
+</script>
+
