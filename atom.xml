@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
     <title>Yunmo&apos; Blog</title>
-    <updated>2020-09-01T09:55:52.591Z</updated>
+    <updated>2020-09-01T10:13:03.795Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
@@ -10,15 +10,6 @@
     <logo>https://blog.yunmo.org.cn/images/avatar.png</logo>
     <icon>https://blog.yunmo.org.cn/favicon.ico</icon>
     <rights>All rights reserved 2020, Yunmo&apos; Blog</rights>
-    <entry>
-        <title type="html"><![CDATA[22]]></title>
-        <id>https://blog.yunmo.org.cn/post/TetzVj8n32/</id>
-        <link href="https://blog.yunmo.org.cn/post/TetzVj8n32/">
-        </link>
-        <updated>2020-09-01T09:39:14.000Z</updated>
-        <content type="html"><![CDATA[<p>111122</p>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？]]></title>
         <id>https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/</id>
