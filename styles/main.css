@@ -453,6 +453,18 @@ a {
 .post-detail .post-title {
   font-size: 40px;
 }
+.post-detail .post-publish {
+  width: 100%;
+  padding: 24px 0;
+}
+.post-detail .post-publish .post-visitor {
+  text-align: right;
+  margin-left: 10px;
+}
+.post-detail .post-publish .post-date {
+  font-size: 18px;
+  color: #adb5bd;
+}
 .post-detail .post-date {
   font-size: 18px;
   padding: 24px 0;
