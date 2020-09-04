@@ -8,14 +8,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1599208029544">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1599214556420">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
 
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--valine 评论 和单页统计-->
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<!--不蒜子-->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177245599-1"></script>
 <script>
@@ -37,7 +40,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://blog.yunmo.org.cn">
-        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1599208029544" class="site-logo">
+        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1599214556420" class="site-logo">
         <h1 class="site-title">Yunmo&#39; Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -94,15 +97,35 @@
         
       
     </div>
+      <div >
+          <!--            <span id="busuanzi_container_site_pv">-->
+          <!--                &lt;!&ndash;总访问量&ndash;&gt;-->
+          <!--                ⌛ <span id="busuanzi_value_site_pv"></span>次-->
+          <!--            </span>-->
+<!--          <span id="busuanzi_container_site_uv">-->
+<!--                &lt;!&ndash;总访客人数&ndash;&gt;-->
+<!--                👣 <span id="busuanzi_value_site_uv"></span>-->
+<!--            </span>-->
+          <!--          <span id="busuanzi_container_page_pv">-->
+          <!--                &lt;!&ndash;本文访问数&ndash;&gt;-->
+          <!--                👁 <span id="busuanzi_value_page_pv"></span>次-->
+          <!--            </span>-->
+      </div>
     <div class="site-description">
       温故而知新，见贤思齐焉，见不贤而内自省也
     </div>
+
     <div class="site-footer">
-      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a>
+        Copyright © 2020 |<span id="busuanzi_container_site_uv">
+                <!--总访客人数-->
+                👣<span id="busuanzi_value_site_uv"></span>
+            </span> | <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a>
 <!--        | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>-->
+
     </div>
   </div>
 </div>
+
 
 
       <div class="main-container">
@@ -172,7 +195,6 @@
         </div>
       </div>
     </div>
-
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script type="application/javascript">
 
