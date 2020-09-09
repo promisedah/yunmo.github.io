@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1599646721132">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1599646933021">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
 
@@ -33,12 +33,12 @@
     <meta name="description" content="定时构建语法如下:
 * * * * *
 
+
 第一个表示分钟，取值0~59
 第二个表示小时，取值0~23
 第三个表示一个月的第几天，取值1~31
 第四个表示第几月，取值1~12
-第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日
-..." />
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日..." />
     <meta name="keywords" content="Jenkins" />
   </head>
   <body>
@@ -48,7 +48,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://blog.yunmo.org.cn">
-        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1599646721132" class="site-logo">
+        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1599646933021" class="site-logo">
         <h1 class="site-title">Yunmo&#39; Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -161,6 +161,7 @@
               <p>定时构建语法如下:</p>
 <pre><code>* * * * *
 </code></pre>
+<!-- more -->
 <p>第一个<em>表示分钟，取值0~59<br>
 第二个</em>表示小时，取值0~23<br>
 第三个<em>表示一个月的第几天，取值1~31<br>
@@ -170,8 +171,8 @@
 <p>这里的时间表达式的配置和Linux系统的crontab命令的时间表达式一样的 ，这里不多说了。<a href="https://www.lenar.io/jenkins-schedule-build-periodically/">详细介绍</a></p>
 <!-- more -->
 <p>如:</p>
-<pre><code>0-59/10  *  *  *  *     #十分钟构建一次
-H H/3  *  *  *      #三个小时构建一次
+<pre><code>0-59/10 * * * *     #十分钟构建一次
+H H/3 * * *      #三个小时构建一次
 H 0 * * *     #每天晚上0点构建一次
 </code></pre>
 <p>步骤如下：</p>
