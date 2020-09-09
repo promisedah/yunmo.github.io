@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？ | Yunmo&#39; Blog</title>
+<title>Jenkins定时构建Maven项目 | Yunmo&#39; Blog</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -30,17 +30,16 @@
 </script>
 
 
-    <meta name="description" content="MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?
+    <meta name="description" content="定时构建语法如下:
+* * * * *
 
-
-为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。
-
-
-⚠️注意：远程连接记得开放服务器mysql远程端口。
-
-
-如：添加一个用户名为db_u..." />
-    <meta name="keywords" content="MySQL" />
+第一个表示分钟，取值0~59
+第二个表示小时，取值0~23
+第三个表示一个月的第几天，取值1~31
+第四个表示第几月，取值1~12
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日
+..." />
+    <meta name="keywords" content="Jenkins" />
   </head>
   <body>
     <div id="app" class="main">
@@ -140,11 +139,11 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？</h2>
+            <h2 class="post-title">Jenkins定时构建Maven项目</h2>
             <div class="post-publish">
-              <span class="post-date">2020-08-31 13:08</span>
+              <span class="post-date">2020-09-09 17:09</span>
               <!-- id 将作为查询条件 -->
-                <span id="/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/" class="leancloud_visitors" data-flag-title="留言板">
+                <span id="/post/jenkins-schedule-build/" class="leancloud_visitors" data-flag-title="留言板">
                  <span class="post-visitor">
                     <em  style="font-style: normal" class="post-meta-item-text">
                      👁
@@ -155,53 +154,37 @@
                 </span>
             </div>
             
-              <div class="feature-container" style="background-image: url('https://blog.yunmo.org.cn/post-images/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian.jpeg')">
+              <div class="feature-container" style="background-image: url('https://blog.yunmo.org.cn/post-images/jenkins-schedule-build.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
-<!-- more -->
-<blockquote>
-<p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
-</blockquote>
-<blockquote>
-<p>⚠️注意：远程连接记得开放服务器mysql远程端口。</p>
-</blockquote>
-<blockquote>
-<p>如：添加一个用户名为db_user，密码为db_pass，授权为% （%表示所有外围IP能连接）对db_name数据库所有权限</p>
-</blockquote>
-<!-- more -->
-<p>命令如下:</p>
-<pre><code>mysql -uroot -p
-
-Enter password: #输入数据库的root密码，默认不显示密码
-
-MySQL [(none)]&gt; grant all privileges on db_name.* to db_user@'%' identified 
-by 'db_pass'; #授权语句，特别注意有分号
-
-MySQL [(none)]&gt; flush privileges; #权限立即生效
-
-MySQL [(none)]&gt; exit; #退出数据库控制台，特别注意有分号
-
+              <p>定时构建语法如下:</p>
+<pre><code>* * * * *
 </code></pre>
-<p>例：</p>
-<!-- more --> 
-<pre><code>grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
-
-flush privileges;
-
-exit;
-
-</code></pre>
+<p>第一个<em>表示分钟，取值0~59<br>
+第二个</em>表示小时，取值0~23<br>
+第三个<em>表示一个月的第几天，取值1~31<br>
+第四个</em>表示第几月，取值1~12<br>
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</p>
 <!-- more -->
-<p>😘 现在就可以用刚才创建的用户去连接啦~</p>
+<p>这里的时间表达式的配置和Linux系统的crontab命令的时间表达式一样的 ，这里不多说了。<a href="https://www.lenar.io/jenkins-schedule-build-periodically/">详细介绍</a></p>
+<!-- more -->
+<p>如:</p>
+<pre><code>0-59/10  *  *  *  *     #十分钟构建一次
+H H/3  *  *  *      #三个小时构建一次
+H 0 * * *     #每天晚上0点构建一次
+</code></pre>
+<p>步骤如下：</p>
+<!-- more -->
+<p><img src="https://blog.yunmo.org.cn/post-images/1599646310973.jpg" alt="" loading="lazy"><br>
+<img src="https://blog.yunmo.org.cn/post-images/1599646316508.jpg" alt="" loading="lazy"></p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://blog.yunmo.org.cn/tag/4XafjaIkY/" class="tag">
-                    MySQL
+                  <a href="https://blog.yunmo.org.cn/tag/jenkins/" class="tag">
+                    Jenkins
                   </a>
                 
               </div>
@@ -209,9 +192,9 @@ exit;
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://blog.yunmo.org.cn/post/csk1jrrgK/">
+                <a href="https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
                   <h3 class="post-title">
-                    基于浏览器的视频通话如何实现网络穿透找到内网目标地址？
+                    MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？
                   </h3>
                 </a>
               </div>

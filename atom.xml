@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
     <title>Yunmo&apos; Blog</title>
-    <updated>2020-09-04T10:16:40.689Z</updated>
+    <updated>2020-09-09T10:19:32.305Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
@@ -10,6 +10,43 @@
     <logo>https://blog.yunmo.org.cn/images/avatar.png</logo>
     <icon>https://blog.yunmo.org.cn/favicon.ico</icon>
     <rights>All rights reserved 2020, Yunmo&apos; Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Jenkins定时构建Maven项目]]></title>
+        <id>https://blog.yunmo.org.cn/post/jenkins-schedule-build/</id>
+        <link href="https://blog.yunmo.org.cn/post/jenkins-schedule-build/">
+        </link>
+        <updated>2020-09-09T09:46:43.000Z</updated>
+        <summary type="html"><![CDATA[<p>定时构建语法如下:</p>
+<pre><code>* * * * *
+</code></pre>
+<p>第一个<em>表示分钟，取值0~59<br>
+第二个</em>表示小时，取值0~23<br>
+第三个<em>表示一个月的第几天，取值1~31<br>
+第四个</em>表示第几月，取值1~12<br>
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>定时构建语法如下:</p>
+<pre><code>* * * * *
+</code></pre>
+<p>第一个<em>表示分钟，取值0~59<br>
+第二个</em>表示小时，取值0~23<br>
+第三个<em>表示一个月的第几天，取值1~31<br>
+第四个</em>表示第几月，取值1~12<br>
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</p>
+<!-- more -->
+<p>这里的时间表达式的配置和Linux系统的crontab命令的时间表达式一样的 ，这里不多说了。<a href="https://www.lenar.io/jenkins-schedule-build-periodically/">详细介绍</a></p>
+<!-- more -->
+<p>如:</p>
+<pre><code>0-59/10  *  *  *  *     #十分钟构建一次
+H H/3  *  *  *      #三个小时构建一次
+H 0 * * *     #每天晚上0点构建一次
+</code></pre>
+<p>步骤如下：</p>
+<!-- more -->
+<p><img src="https://blog.yunmo.org.cn/post-images/1599646310973.jpg" alt="" loading="lazy"><br>
+<img src="https://blog.yunmo.org.cn/post-images/1599646316508.jpg" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？]]></title>
         <id>https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/</id>
