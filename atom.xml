@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
     <title>Yunmo&apos; Blog</title>
-    <updated>2020-09-12T08:42:26.582Z</updated>
+    <updated>2020-09-12T10:16:50.100Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
@@ -210,7 +210,7 @@ classes/conf 是我们指定的配置文件编译存放目录，由于我这里*
 </code></pre>
 <p>你使用时候只需要把上面<code>&lt;build&gt;...&lt;/build&gt;</code>标签中的内容复制到你的项目中的pom中，把主程序启动函数<code>&lt;mainClass&gt;...&lt;/mainClass&gt;</code>地址修改为你的springboot启动类路径就可以啦</p>
 <!-- more -->
-<h3 id="3maven打包">3.maven打包</h3>
+<h2 id="3maven打包">3.maven打包</h2>
 <p>有两种方式来打包</p>
 <h4 id="1-idea配置打包建议">1、idea配置打包（建议）</h4>
 <p>首先我们来配置个maven启动项，点击点击启动项后面的倒三角<br>
@@ -245,7 +245,7 @@ mvn package appassembler:assemble
 打包成功一样会在控制台输出 BUILD SUCCESS 和一些打包信息。<br>
 如copy了几个配置文件到哪里，耗时多久等信息，并会生成对应打包目录app</p>
 <!-- more -->
-<h3 id="4启动项目">4.启动项目</h3>
+<h2 id="4启动项目">4.启动项目</h2>
 <p>找到打包后的文件夹targer/app，我们点开bin目录会有两个文件.bat结尾的是windows启动脚本，另一个是linux启动脚本<br>
 <img src="https://blog.yunmo.org.cn/post-images/1599891905875.png" alt="" loading="lazy"></p>
 <!-- more -->
@@ -268,7 +268,7 @@ idea<br>
 
 </code></pre>
 <figure data-type="image" tabindex="2"><img src="https://blog.yunmo.org.cn/post-images/1599898585408.png" alt="" loading="lazy"></figure>
-<h3 id="5服务验证">5.服务验证</h3>
+<h2 id="5服务验证">5.服务验证</h2>
 <p>从启动的控制台找到你的端口和content path(springboot项目默认为'')<br>
 <img src="https://blog.yunmo.org.cn/post-images/1599892803473.png" alt="" loading="lazy"><br>
 打开浏览器输入你的项目地址， ip:端口/content path，我这里content path为空可以不填，出现下面这个界面就表示成功了</p>
@@ -290,13 +290,11 @@ idea<br>
         <link href="https://blog.yunmo.org.cn/post/jenkins-schedule-build/">
         </link>
         <updated>2020-09-09T09:46:43.000Z</updated>
-        <summary type="html"><![CDATA[<!-- more -->
-<p>定时构建语法如下:</p>
+        <summary type="html"><![CDATA[<p>定时构建语法如下:</p>
 <pre><code>* * * * *
 </code></pre>
 ]]></summary>
-        <content type="html"><![CDATA[<!-- more -->
-<p>定时构建语法如下:</p>
+        <content type="html"><![CDATA[<p>定时构建语法如下:</p>
 <pre><code>* * * * *
 </code></pre>
 <!-- more -->
