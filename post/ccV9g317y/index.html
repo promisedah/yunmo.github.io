@@ -1,24 +1,156 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://blog.yunmo.org.cn</id>
-    <title>Yunmo&apos; Blog</title>
-    <updated>2020-09-12T08:42:26.582Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://blog.yunmo.org.cn"/>
-    <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
-    <subtitle>温故而知新，见贤思齐焉，见不贤而内自省也</subtitle>
-    <logo>https://blog.yunmo.org.cn/images/avatar.png</logo>
-    <icon>https://blog.yunmo.org.cn/favicon.ico</icon>
-    <rights>All rights reserved 2020, Yunmo&apos; Blog</rights>
-    <entry>
-        <title type="html"><![CDATA[Maven项目打包并自动生成启动脚本]]></title>
-        <id>https://blog.yunmo.org.cn/post/ccV9g317y/</id>
-        <link href="https://blog.yunmo.org.cn/post/ccV9g317y/">
-        </link>
-        <updated>2020-09-12T02:41:37.000Z</updated>
-        <summary type="html"><![CDATA[<p>本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Maven存储库中的已定义汇编目录中。所有工件（依赖关系+项目中的工件）都将添加到生成的bin脚本中的类路径中。<a href="https://www.mojohaus.org/appassembler/appassembler-maven-plugin/">官网介绍</a></p>
-]]></summary>
-        <content type="html"><![CDATA[<p>本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Maven存储库中的已定义汇编目录中。所有工件（依赖关系+项目中的工件）都将添加到生成的bin脚本中的类路径中。<a href="https://www.mojohaus.org/appassembler/appassembler-maven-plugin/">官网介绍</a></p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Maven项目打包并自动生成启动脚本 | Yunmo&#39; Blog</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1599900144241">
+<link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--valine 评论 和单页统计-->
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<!--不蒜子-->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177245599-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177245599-1');
+</script>
+
+
+    <meta name="description" content="本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Ma..." />
+    <meta name="keywords" content="Java,Maven" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://blog.yunmo.org.cn">
+        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1599900144241" class="site-logo">
+        <h1 class="site-title">Yunmo&#39; Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            🏠 首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            📚 归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            🏷 标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            💦 关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/promisedah" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/u/5576667922" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+      <div >
+          <!--            <span id="busuanzi_container_site_pv">-->
+          <!--                &lt;!&ndash;总访问量&ndash;&gt;-->
+          <!--                ⌛ <span id="busuanzi_value_site_pv"></span>次-->
+          <!--            </span>-->
+<!--          <span id="busuanzi_container_site_uv">-->
+<!--                &lt;!&ndash;总访客人数&ndash;&gt;-->
+<!--                👣 <span id="busuanzi_value_site_uv"></span>-->
+<!--            </span>-->
+          <!--          <span id="busuanzi_container_page_pv">-->
+          <!--                &lt;!&ndash;本文访问数&ndash;&gt;-->
+          <!--                👁 <span id="busuanzi_value_page_pv"></span>次-->
+          <!--            </span>-->
+      </div>
+    <div class="site-description">
+      温故而知新，见贤思齐焉，见不贤而内自省也
+    </div>
+
+    <div class="site-footer">
+        Copyright © 2020 |<span id="busuanzi_container_site_uv">
+                <!--总访客人数-->
+                👣<span id="busuanzi_value_site_uv"></span>
+            </span> | <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a>
+<!--        | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>-->
+
+    </div>
+  </div>
+</div>
+
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Maven项目打包并自动生成启动脚本</h2>
+            <div class="post-publish">
+              <span class="post-date">2020-09-12 10:09</span>
+              <!-- id 将作为查询条件 -->
+                <span id="/post/ccV9g317y/" class="leancloud_visitors" data-flag-title="留言板">
+                 <span class="post-visitor">
+                    <em  style="font-style: normal" class="post-meta-item-text">
+                     👁
+                    </em>
+<!--                   <svg height="14" width="14" t="1599188470976" class="icon" viewBox="0 0 1033 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="581" width="200" height="200"><path d="M516.644571 146.285714c150.893714 0 278.930286 67.401143 384 178.578286a775.497143 775.497143 0 0 1 116.297143 160.621714c4.022857 7.460571 6.765714 12.946286 8.265143 16.128l8.045714 17.225143-9.472 16.493714c-1.718857 2.998857-4.900571 8.265143-9.435428 15.36a907.154286 907.154286 0 0 1-125.915429 154.550858C778.825143 812.617143 654.226286 877.714286 516.644571 877.714286c-137.581714 0-262.180571-65.097143-371.785142-172.470857A907.154286 907.154286 0 0 1 18.944 550.765714a418.852571 418.852571 0 0 1-9.435429-15.36l-9.508571-16.530285 8.082286-17.188572c5.485714-11.739429 15.981714-31.341714 31.561143-56.173714A775.497143 775.497143 0 0 1 132.644571 324.864C237.714286 213.686857 365.750857 146.285714 516.644571 146.285714z m415.049143 338.029715a703.012571 703.012571 0 0 0-84.224-109.202286C755.090286 277.394286 645.010286 219.428571 516.644571 219.428571c-128.365714 0-238.445714 57.965714-330.825142 155.684572a703.012571 703.012571 0 0 0-102.546286 140.361143 834.706286 834.706286 0 0 0 112.786286 137.508571C293.193143 748.214857 401.152 804.571429 516.644571 804.571429c115.492571 0 223.451429-56.393143 320.585143-151.552a834.706286 834.706286 0 0 0 112.786286-137.545143c-5.229714-9.508571-11.337143-20.004571-18.322286-31.158857zM516.644571 329.142857c100.242286 0 182.857143 82.614857 182.857143 182.857143 0 101.083429-80.713143 182.857143-182.857143 182.857143-101.083429 0-182.857143-80.713143-182.857142-182.857143 0-101.083429 80.713143-182.857143 182.857142-182.857143z m0 73.142857c-61.549714 0-109.714286 48.786286-109.714285 109.714286 0 61.549714 48.786286 109.714286 109.714285 109.714286 61.549714 0 109.714286-48.786286 109.714286-109.714286 0-59.830857-49.883429-109.714286-109.714286-109.714286z" p-id="582"></path></svg>-->
+                    <i style="font-style: normal" class="leancloud-visitors-count">loading</i>
+                  </span>
+                </span>
+            </div>
+            
+              <div class="feature-container" style="background-image: url('https://lh6.googleusercontent.com/proxy/ZSfugsLt5lHBURje2F6XiNhVsZ4RuoXRQBlzDhCIEQq00f8aDsEtoL1G9B4tZSrLg0bEwB2VgZW-szG5PgAtdMornkOAVxceoP-m6GesnFE=w3840-h2160-p-k-no-nd-mv')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Maven存储库中的已定义汇编目录中。所有工件（依赖关系+项目中的工件）都将添加到生成的bin脚本中的类路径中。<a href="https://www.mojohaus.org/appassembler/appassembler-maven-plugin/">官网介绍</a></p>
 <!-- more -->
 <p>我们先来看下打包后最终目录结构：<br>
 <img src="https://blog.yunmo.org.cn/post-images/1599879737920.png" alt="" loading="lazy"></p>
@@ -282,158 +414,72 @@ idea<br>
 <figure data-type="image" tabindex="4"><img src="https://blog.yunmo.org.cn/post-images/1599895758564.png" alt="" loading="lazy"></figure>
 <!-- more -->
 <p>🌈 以上就是全部步骤啦，有问题欢迎在下方给我留言~</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Jenkins定时构建Maven项目]]></title>
-        <id>https://blog.yunmo.org.cn/post/jenkins-schedule-build/</id>
-        <link href="https://blog.yunmo.org.cn/post/jenkins-schedule-build/">
-        </link>
-        <updated>2020-09-09T09:46:43.000Z</updated>
-        <summary type="html"><![CDATA[<!-- more -->
-<p>定时构建语法如下:</p>
-<pre><code>* * * * *
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<!-- more -->
-<p>定时构建语法如下:</p>
-<pre><code>* * * * *
-</code></pre>
-<!-- more -->
-<p>第一个<em>表示分钟，取值0~59<br>
-第二个</em>表示小时，取值0~23<br>
-第三个<em>表示一个月的第几天，取值1~31<br>
-第四个</em>表示第几月，取值1~12<br>
-第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</p>
-<!-- more -->
-<p>这里的时间表达式的配置和Linux系统的crontab命令的时间表达式一样的 ，这里不多说了。<a href="https://www.lenar.io/jenkins-schedule-build-periodically/">详细介绍</a></p>
-<!-- more -->
-<p>如:</p>
-<pre><code>0-59/10 * * * *     #十分钟构建一次
-H H/3 * * *      #三个小时构建一次
-H 0 * * *     #每天晚上0点构建一次
-</code></pre>
-<p>步骤如下：</p>
-<!-- more -->
-<p><img src="https://blog.yunmo.org.cn/post-images/1599646310973.jpg" alt="" loading="lazy"><br>
-<img src="https://blog.yunmo.org.cn/post-images/1599646316508.jpg" alt="" loading="lazy"></p>
-<!-- more -->
-<p>结果：<br>
-<img src="https://blog.yunmo.org.cn/post-images/1599698361147.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？]]></title>
-        <id>https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/</id>
-        <link href="https://blog.yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
-        </link>
-        <updated>2020-08-31T05:55:53.000Z</updated>
-        <summary type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
-<!-- more -->
-<blockquote>
-<p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
-</blockquote>
-<blockquote>
-<p>⚠️注意：远程连接记得开放服务器mysql远程端口。</p>
-</blockquote>
-<blockquote>
-<p>如：添加一个用户名为db_user，密码为db_pass，授权为% （%表示所有外围IP能连接）对db_name数据库所有权限</p>
-</blockquote>
-<!-- more -->
-<p>命令如下:</p>
-<pre><code>mysql -uroot -p
 
-Enter password: #输入数据库的root密码，默认不显示密码
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://blog.yunmo.org.cn/tag/java/" class="tag">
+                    Java
+                  </a>
+                
+                  <a href="https://blog.yunmo.org.cn/tag/maven/" class="tag">
+                    Maven
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://blog.yunmo.org.cn/post/jenkins-schedule-build/">
+                  <h3 class="post-title">
+                    Jenkins定时构建Maven项目
+                  </h3>
+                </a>
+              </div>
+            
 
-MySQL [(none)]&gt; grant all privileges on db_name.* to db_user@'%' identified 
-by 'db_pass'; #授权语句，特别注意有分号
+            
+				<div id="vcomments"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-MySQL [(none)]&gt; flush privileges; #权限立即生效
+AOS.init();
 
-MySQL [(none)]&gt; exit; #退出数据库控制台，特别注意有分号
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-</code></pre>
-<p>例：</p>
-<!-- more --> 
-<pre><code>grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
+</script>
 
-flush privileges;
 
-exit;
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
 
-</code></pre>
-<!-- more -->
-<p>😘 现在就可以用刚才创建的用户去连接啦~</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[基于浏览器的视频通话如何实现网络穿透找到内网目标地址？]]></title>
-        <id>https://blog.yunmo.org.cn/post/csk1jrrgK/</id>
-        <link href="https://blog.yunmo.org.cn/post/csk1jrrgK/">
-        </link>
-        <updated>2020-08-30T06:45:06.000Z</updated>
-        <summary type="html"><![CDATA[<p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
-]]></summary>
-        <content type="html"><![CDATA[<p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
-<!-- more -->
-<h2 id="首先你需要一台公网ip的服务器">首先你需要一台公网ip的服务器</h2>
-<h3 id="基于coturn项目的stunturn服务器搭建">基于coturn项目的stun/turn服务器搭建</h3>
-<!-- more -->
-<p>通过stun/turn中继服务器，我们就可以通过公网IP地址来解析找到发起请求的内网IP地址（即：躲在路由器或交换机后的电脑）</p>
-<p>我这边采用<a href="https://peerjs.com/">PeerJs</a>库来建立P2P数据或媒体流连接。</p>
-<p>实际测试，中继服务器还是会存在找不到内网地址的情况。</p>
-<h3 id="经过调试webrtc已成功建立连接的浏览器有">经过调试WebRTC已成功建立连接的浏览器有：</h3>
-<!-- more -->
-<blockquote>
-<p>PC to PC:<br>
-Chrome to Chrome</p>
-</blockquote>
-<blockquote>
-<p>PC to Mobile（IOS）:<br>
-Chrome to Safari</p>
-</blockquote>
-<blockquote>
-<p>PC to  Mobile（Android）:<br>
-Chrome to Chrome</p>
-</blockquote>
-<!-- more -->
-<h3 id="coturn安装">coturn安装</h3>
-<blockquote>
-<p>首先从git仓库clone下来</p>
-</blockquote>
-<pre><code>git clone https://github.com/coturn/coturn.git
 
-cd ~/path #进去clone项目地址根目录
-</code></pre>
-<blockquote>
-<p>编译安装</p>
-</blockquote>
-<pre><code>./configure --prefix=/usr/local/coturn make &amp; sudo make install
-</code></pre>
-<blockquote>
-<p>命令模式启动服务</p>
-</blockquote>
-<pre><code>turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=your.name:your.passwod -r your.domain -L your.ip
-</code></pre>
-<p>例：</p>
-<pre><code>./turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=yunmo:123 -r yunmo.org.cn -L 172.19.189.21
-</code></pre>
-<blockquote>
-<p>-o 以守护进程模式运行（后台运行）<br>
--v 日志会以“适度详细”的程度来记录<br>
--f  增加指纹机制<br>
--a 长期验证机制<br>
--m 以x个进程来处理中继请求<br>
---max-bps 带宽<br>
---min-port   起始用的最小端口<br>
---max-port   最大端口号<br>
---user=帐号：密码 (turn服务的用户验证机制要用)<br>
--r  域名<br>
--L 监听IP(turn服务器的ip)这个ip是你ifconfig查到的ip，不是你的公网ip<br>
--X   后面加 public ip/ private ip       多IP情况下使用，有几个ip就用几次</p>
-</blockquote>
-]]></content>
-    </entry>
-</feed>
+
+
+
+  </body>
+</html>
+<script type="application/javascript">
+  // 禁止使用此id key哦~~
+  new Valine({
+    el: '#vcomments',
+    appId: 'TQ68bkDunqiY78ozjQK7kLrX-gzGzoHsz',
+    appKey: '0itQcytPBGHG6eLijcqIox01',
+    visitor: true, // 阅读量统计
+    placeholder: '请输入留言...'
+  })
+</script>
+
