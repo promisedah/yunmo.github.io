@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
     <title>Yunmo&apos; Blog</title>
-    <updated>2020-11-28T03:53:49.668Z</updated>
+    <updated>2021-04-14T02:39:40.906Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
     <subtitle>温故而知新，见贤思齐焉，见不贤而内自省也</subtitle>
     <logo>https://blog.yunmo.org.cn/images/avatar.png</logo>
     <icon>https://blog.yunmo.org.cn/favicon.ico</icon>
-    <rights>All rights reserved 2020, Yunmo&apos; Blog</rights>
+    <rights>All rights reserved 2021, Yunmo&apos; Blog</rights>
     <entry>
         <title type="html"><![CDATA[Maven项目打包并自动生成启动脚本]]></title>
         <id>https://blog.yunmo.org.cn/post/ccV9g317y/</id>
@@ -333,17 +333,36 @@ H 0 * * *     #每天晚上0点构建一次
 <blockquote>
 <p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
 </blockquote>
+<pre><code># 先连接登录mysql
+mysql -uroot -p
+Enter password: #输入数据库的root密码，默认不显示密码
+
+# 创建用户并授权允许所有访问地址。
+# db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
+create user db_user@'%' identified by 'db_password'; 
+</code></pre>
+<!-- more -->
 <blockquote>
-<p>⚠️注意：远程连接记得开放服务器mysql远程端口。</p>
+<p>⚠️注意：远程连接记得开放服务器mysql远程端口，如果是云服务器云端口也要开放。</p>
 </blockquote>
+<p>如果您的操作系统为CentOS系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+service iptables save #保存iptables规则
+</code></pre>
+<p>如果您的操作系统为Ubuntu/Debian系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+iptables-save &gt; /etc/iptables.up.rules  #保存iptables规则
+</code></pre>
 <blockquote>
 <p>如：添加一个用户名为db_user，密码为db_pass，授权为% （%表示所有外围IP能连接）对db_name数据库所有权限</p>
 </blockquote>
 <!-- more -->
-<p>命令如下:</p>
+<p>完整命令如下:</p>
 <pre><code>mysql -uroot -p
 
 Enter password: #输入数据库的root密码，默认不显示密码
+
+MySQL [(none)]&gt; create user db_user@'%' identified by 'db_password'; #创建用户并授权允许所有访问地址。%表示授权所有地址
 
 MySQL [(none)]&gt; grant all privileges on db_name.* to db_user@'%' identified 
 by 'db_pass'; #授权语句，特别注意有分号
@@ -355,7 +374,9 @@ MySQL [(none)]&gt; exit; #退出数据库控制台，特别注意有分号
 </code></pre>
 <p>例：</p>
 <!-- more --> 
-<pre><code>grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
+<pre><code>create user yunmo_test@'%' identified by 'yunmo'; 
+
+grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
 
 flush privileges;
 

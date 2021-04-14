@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1606531132076">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1618367970047">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
 
@@ -35,109 +35,122 @@
 
 为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。
 
-
-⚠️注意：远程连接记得开放服务器mysql远程端口。
-
-
-如：添加一个用户名为db_u..." />
+# 先连接登录mysql
+mysql -uroot -p
+Enter password:..." />
     <meta name="keywords" content="MySQL" />
   </head>
   <body>
     <div id="app" class="main">
 
       <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://blog.yunmo.org.cn">
-        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1606531132076" class="site-logo">
-        <h1 class="site-title">Yunmo&#39; Blog</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
+    <div class="top-container" data-aos="fade-right">
+        <div class="top-header-container">
+            <a class="site-title-container" href="https://blog.yunmo.org.cn">
+                <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1618367970047" class="site-logo">
+                <h1 class="site-title">Yunmo&#39; Blog</h1>
+            </a>
+            <div class="menu-btn" @click="menuVisible = !menuVisible">
+                <div class="line"></div>
+            </div>
+        </div>
+        <div>
+            
+                
+                    <a href="/" class="site-nav">
+                        🏠 首页
+                    </a>
+                
+            
+                
+                    <a href="/archives" class="site-nav">
+                        📚 归档
+                    </a>
+                
+            
+                
+                    <a href="/tags" class="site-nav">
+                        🏷 标签
+                    </a>
+                
+            
+                
+                    <a href="/post/about" class="site-nav">
+                        💦 关于
+                    </a>
+                
+            
+        </div>
     </div>
-    <div>
-      
-        
-          <a href="/" class="site-nav">
-            🏠 首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="site-nav">
-            📚 归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            🏷 标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            💦 关于
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/promisedah" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-          <a class="social-link" href="https://weibo.com/u/5576667922" target="_blank">
-            <i class="fab fa-weibo"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-    </div>
-      <div >
-          <!--            <span id="busuanzi_container_site_pv">-->
-          <!--                &lt;!&ndash;总访问量&ndash;&gt;-->
-          <!--                ⌛ <span id="busuanzi_value_site_pv"></span>次-->
-          <!--            </span>-->
-<!--          <span id="busuanzi_container_site_uv">-->
-<!--                &lt;!&ndash;总访客人数&ndash;&gt;-->
-<!--                👣 <span id="busuanzi_value_site_uv"></span>-->
-<!--            </span>-->
-          <!--          <span id="busuanzi_container_page_pv">-->
-          <!--                &lt;!&ndash;本文访问数&ndash;&gt;-->
-          <!--                👁 <span id="busuanzi_value_page_pv"></span>次-->
-          <!--            </span>-->
-      </div>
-    <div class="site-description">
-      温故而知新，见贤思齐焉，见不贤而内自省也
-    </div>
+    <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+        <div>
+            <!--自定义-->
+            <span class="site-nav" @click="showBot = !showBot">🤖</span>
+        </div>
+        <div class="social-container">
+            
+                
+                    <a class="social-link" href="https://github.com/promisedah" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                
+            
+                
+            
+                
+                    <a class="social-link" href="https://weibo.com/u/5576667922" target="_blank">
+                        <i class="fab fa-weibo"></i>
+                    </a>
+                
+            
+                
+            
+                
+            
+        </div>
+        <div>
+            <!--            <span id="busuanzi_container_site_pv">-->
+            <!--                &lt;!&ndash;总访问量&ndash;&gt;-->
+            <!--                ⌛ <span id="busuanzi_value_site_pv"></span>次-->
+            <!--            </span>-->
+            <!--          <span id="busuanzi_container_site_uv">-->
+            <!--                &lt;!&ndash;总访客人数&ndash;&gt;-->
+            <!--                👣 <span id="busuanzi_value_site_uv"></span>-->
+            <!--            </span>-->
+            <!--          <span id="busuanzi_container_page_pv">-->
+            <!--                &lt;!&ndash;本文访问数&ndash;&gt;-->
+            <!--                👁 <span id="busuanzi_value_page_pv"></span>次-->
+            <!--            </span>-->
+        </div>
+        <div class="site-description">
+            温故而知新，见贤思齐焉，见不贤而内自省也
+        </div>
 
-    <div class="site-footer">
-        Copyright © 2020 |<span id="busuanzi_container_site_uv">
+        <div class="site-footer">
+            Copyright © 2020 |<span id="busuanzi_container_site_uv">
                 <!--总访客人数-->
                 👣<span id="busuanzi_value_site_uv"></span>
             </span> | <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a>
-<!--        | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>-->
+            <!--        | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>-->
+
+        </div>
 
     </div>
-  </div>
 </div>
 
 
 
       <div class="main-container">
+        <div style="position: absolute;top:50%;left:50%;margin-left:-300px; margin-top:-150px;" v-show="showBot">
+    <!--腾讯机器人-->
+    <iframe
+            allow="microphone"
+            width="250"
+            height="200"
+            src="https://tbp.cloud.tencent.com/tbp-h5-v2/?AgentId=RIOZHa7ixMEuAG3fn9c%2FhqO1gY322p7dye4dm376wn3UZjCIunHXDL1yPfZsHG23WyKUU2rIi6NgqQEnsSXZN6uUmcCqJFSRpEyFM5FWojg%3D&ufc=&ubc=&bfc=&bbc=&tfc=&tbc=">
+    </iframe>
+</div>
+
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？</h2>
@@ -164,17 +177,36 @@
 <blockquote>
 <p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
 </blockquote>
+<pre><code># 先连接登录mysql
+mysql -uroot -p
+Enter password: #输入数据库的root密码，默认不显示密码
+
+# 创建用户并授权允许所有访问地址。
+# db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
+create user db_user@'%' identified by 'db_password'; 
+</code></pre>
+<!-- more -->
 <blockquote>
-<p>⚠️注意：远程连接记得开放服务器mysql远程端口。</p>
+<p>⚠️注意：远程连接记得开放服务器mysql远程端口，如果是云服务器云端口也要开放。</p>
 </blockquote>
+<p>如果您的操作系统为CentOS系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+service iptables save #保存iptables规则
+</code></pre>
+<p>如果您的操作系统为Ubuntu/Debian系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+iptables-save &gt; /etc/iptables.up.rules  #保存iptables规则
+</code></pre>
 <blockquote>
 <p>如：添加一个用户名为db_user，密码为db_pass，授权为% （%表示所有外围IP能连接）对db_name数据库所有权限</p>
 </blockquote>
 <!-- more -->
-<p>命令如下:</p>
+<p>完整命令如下:</p>
 <pre><code>mysql -uroot -p
 
 Enter password: #输入数据库的root密码，默认不显示密码
+
+MySQL [(none)]&gt; create user db_user@'%' identified by 'db_password'; #创建用户并授权允许所有访问地址。%表示授权所有地址
 
 MySQL [(none)]&gt; grant all privileges on db_name.* to db_user@'%' identified 
 by 'db_pass'; #授权语句，特别注意有分号
@@ -186,7 +218,9 @@ MySQL [(none)]&gt; exit; #退出数据库控制台，特别注意有分号
 </code></pre>
 <p>例：</p>
 <!-- more --> 
-<pre><code>grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
+<pre><code>create user yunmo_test@'%' identified by 'yunmo'; 
+
+grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
 
 flush privileges;
 
@@ -232,6 +266,7 @@ var app = new Vue({
   el: '#app',
   data: {
     menuVisible: false,
+    showBot:false
   },
 })
 

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1606531132076">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1618367970047">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
 
@@ -36,98 +36,113 @@
     <div id="app" class="main">
 
       <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://blog.yunmo.org.cn">
-        <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1606531132076" class="site-logo">
-        <h1 class="site-title">Yunmo&#39; Blog</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
+    <div class="top-container" data-aos="fade-right">
+        <div class="top-header-container">
+            <a class="site-title-container" href="https://blog.yunmo.org.cn">
+                <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1618367970047" class="site-logo">
+                <h1 class="site-title">Yunmo&#39; Blog</h1>
+            </a>
+            <div class="menu-btn" @click="menuVisible = !menuVisible">
+                <div class="line"></div>
+            </div>
+        </div>
+        <div>
+            
+                
+                    <a href="/" class="site-nav">
+                        🏠 首页
+                    </a>
+                
+            
+                
+                    <a href="/archives" class="site-nav">
+                        📚 归档
+                    </a>
+                
+            
+                
+                    <a href="/tags" class="site-nav">
+                        🏷 标签
+                    </a>
+                
+            
+                
+                    <a href="/post/about" class="site-nav">
+                        💦 关于
+                    </a>
+                
+            
+        </div>
     </div>
-    <div>
-      
-        
-          <a href="/" class="site-nav">
-            🏠 首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="site-nav">
-            📚 归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            🏷 标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            💦 关于
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-          <a class="social-link" href="https://github.com/promisedah" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
-      
-        
-      
-        
-          <a class="social-link" href="https://weibo.com/u/5576667922" target="_blank">
-            <i class="fab fa-weibo"></i>
-          </a>
-        
-      
-        
-      
-        
-      
-    </div>
-      <div >
-          <!--            <span id="busuanzi_container_site_pv">-->
-          <!--                &lt;!&ndash;总访问量&ndash;&gt;-->
-          <!--                ⌛ <span id="busuanzi_value_site_pv"></span>次-->
-          <!--            </span>-->
-<!--          <span id="busuanzi_container_site_uv">-->
-<!--                &lt;!&ndash;总访客人数&ndash;&gt;-->
-<!--                👣 <span id="busuanzi_value_site_uv"></span>-->
-<!--            </span>-->
-          <!--          <span id="busuanzi_container_page_pv">-->
-          <!--                &lt;!&ndash;本文访问数&ndash;&gt;-->
-          <!--                👁 <span id="busuanzi_value_page_pv"></span>次-->
-          <!--            </span>-->
-      </div>
-    <div class="site-description">
-      温故而知新，见贤思齐焉，见不贤而内自省也
-    </div>
+    <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+        <div>
+            <!--自定义-->
+            <span class="site-nav" @click="showBot = !showBot">🤖</span>
+        </div>
+        <div class="social-container">
+            
+                
+                    <a class="social-link" href="https://github.com/promisedah" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                
+            
+                
+            
+                
+                    <a class="social-link" href="https://weibo.com/u/5576667922" target="_blank">
+                        <i class="fab fa-weibo"></i>
+                    </a>
+                
+            
+                
+            
+                
+            
+        </div>
+        <div>
+            <!--            <span id="busuanzi_container_site_pv">-->
+            <!--                &lt;!&ndash;总访问量&ndash;&gt;-->
+            <!--                ⌛ <span id="busuanzi_value_site_pv"></span>次-->
+            <!--            </span>-->
+            <!--          <span id="busuanzi_container_site_uv">-->
+            <!--                &lt;!&ndash;总访客人数&ndash;&gt;-->
+            <!--                👣 <span id="busuanzi_value_site_uv"></span>-->
+            <!--            </span>-->
+            <!--          <span id="busuanzi_container_page_pv">-->
+            <!--                &lt;!&ndash;本文访问数&ndash;&gt;-->
+            <!--                👁 <span id="busuanzi_value_page_pv"></span>次-->
+            <!--            </span>-->
+        </div>
+        <div class="site-description">
+            温故而知新，见贤思齐焉，见不贤而内自省也
+        </div>
 
-    <div class="site-footer">
-        Copyright © 2020 |<span id="busuanzi_container_site_uv">
+        <div class="site-footer">
+            Copyright © 2020 |<span id="busuanzi_container_site_uv">
                 <!--总访客人数-->
                 👣<span id="busuanzi_value_site_uv"></span>
             </span> | <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a>
-<!--        | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>-->
+            <!--        | <a class="rss" href="https://blog.yunmo.org.cn/atom.xml" target="_blank">RSS</a>-->
+
+        </div>
 
     </div>
-  </div>
 </div>
 
 
 
       <div class="main-container">
+        <div style="position: absolute;top:50%;left:50%;margin-left:-300px; margin-top:-150px;" v-show="showBot">
+    <!--腾讯机器人-->
+    <iframe
+            allow="microphone"
+            width="250"
+            height="200"
+            src="https://tbp.cloud.tencent.com/tbp-h5-v2/?AgentId=RIOZHa7ixMEuAG3fn9c%2FhqO1gY322p7dye4dm376wn3UZjCIunHXDL1yPfZsHG23WyKUU2rIi6NgqQEnsSXZN6uUmcCqJFSRpEyFM5FWojg%3D&ufc=&ubc=&bfc=&bbc=&tfc=&tbc=">
+    </iframe>
+</div>
+
         <div class="content-container" data-aos="fade-up">
           <h2 class="tag-list-title">标签列表</h2>
           <div class="tags-container">
@@ -156,6 +171,7 @@ var app = new Vue({
   el: '#app',
   data: {
     menuVisible: false,
+    showBot:false
   },
 })
 
