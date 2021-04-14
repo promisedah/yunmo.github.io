@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1618368255009">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1618368629531">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
 
@@ -35,8 +35,10 @@
 
 为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。
 
-# 先连接登录mysql
+
+先连接登录mysql
 mysql -uroot -p
+
 Enter password:..." />
     <meta name="keywords" content="MySQL" />
   </head>
@@ -47,7 +49,7 @@ Enter password:..." />
     <div class="top-container" data-aos="fade-right">
         <div class="top-header-container">
             <a class="site-title-container" href="https://blog.yunmo.org.cn">
-                <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1618368255009" class="site-logo">
+                <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1618368629531" class="site-logo">
                 <h1 class="site-title">Yunmo&#39; Blog</h1>
             </a>
             <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -177,12 +179,15 @@ Enter password:..." />
 <blockquote>
 <p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
 </blockquote>
-<pre><code># 先连接登录mysql
-mysql -uroot -p
-Enter password: #输入数据库的root密码，默认不显示密码
+<!-- more -->
+<p>先连接登录mysql</p>
+<pre><code>mysql -uroot -p
 
-# 创建用户并授权允许所有访问地址。
-# db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
+Enter password: #输入数据库的root密码，默认不显示密码
+</code></pre>
+<!-- more -->
+<p>创建用户并授权允许所有访问地址。</p>
+<pre><code># db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
 create user db_user@'%' identified by 'db_password'; 
 </code></pre>
 <!-- more -->

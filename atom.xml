@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
     <title>Yunmo&apos; Blog</title>
-    <updated>2021-04-14T02:44:17.536Z</updated>
+    <updated>2021-04-14T02:51:20.792Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
@@ -333,12 +333,15 @@ H 0 * * *     #每天晚上0点构建一次
 <blockquote>
 <p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
 </blockquote>
-<pre><code># 先连接登录mysql
-mysql -uroot -p
-Enter password: #输入数据库的root密码，默认不显示密码
+<!-- more -->
+<p>先连接登录mysql</p>
+<pre><code>mysql -uroot -p
 
-# 创建用户并授权允许所有访问地址。
-# db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
+Enter password: #输入数据库的root密码，默认不显示密码
+</code></pre>
+<!-- more -->
+<p>创建用户并授权允许所有访问地址。</p>
+<pre><code># db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
 create user db_user@'%' identified by 'db_password'; 
 </code></pre>
 <!-- more -->
