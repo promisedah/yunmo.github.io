@@ -3,20 +3,22 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Maven项目打包并自动生成启动脚本 | Yunmo&#39; Blog</title>
+<title>Maven项目打包并自动生成启动脚本 | yunmo私人小屋</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1618388739344">
+<link rel="shortcut icon" href="https://blog.yunmo.org.cn/favicon.ico?v=1622526290603">
 <link rel="stylesheet" href="https://blog.yunmo.org.cn/styles/main.css">
 
+
+  
+
+  
 
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<!--valine 评论 和单页统计-->
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 <!--不蒜子-->
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
@@ -40,8 +42,8 @@
     <div class="top-container" data-aos="fade-right">
         <div class="top-header-container">
             <a class="site-title-container" href="https://blog.yunmo.org.cn">
-                <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1618388739344" class="site-logo">
-                <h1 class="site-title">Yunmo&#39; Blog</h1>
+                <img src="https://blog.yunmo.org.cn/images/avatar.png?v=1622526290603" class="site-logo">
+                <h1 class="site-title">yunmo私人小屋</h1>
             </a>
             <div class="menu-btn" @click="menuVisible = !menuVisible">
                 <div class="line"></div>
@@ -454,9 +456,15 @@ idea<br>
                 </a>
               </div>
             
-
+            <div><h2>3333 valine</h2></div>
             
-				<div id="vcomments"></div>
+              
+
+              
+              
+                <div id="vcomments" data-aos="fade-in"></div>
+              
+            
           </div>
         </div>
       </div>
@@ -464,38 +472,61 @@ idea<br>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script type="application/javascript">
 
-AOS.init();
+  AOS.init();
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-    showBot:false
-  },
-})
+  var app = new Vue({
+    el: '#app',
+    data: {
+      menuVisible: false,
+      showBot: false
+    },
+  })
 
 </script>
 
 
-  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad()
-  </script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+      console.log("2222::::: ")
+      hljs.initHighlightingOnLoad()
+    </script>
 
+
+
+    
+        <!--valine 评论 和单页统计-->
+        <script src='https://unpkg.com/valine/dist/Valine.min.js'></script>
+        <script>
+          const valine = new Valine({
+            el: '#vcomments',
+            appId: 'TQ68bkDunqiY78ozjQK7kLrX-gzGzoHsz',
+            appKey: '0itQcytPBGHG6eLijcqIox01',
+            visitor: 'true', // 阅读量统计
+            placeholder: '请输入留言...',
+            avatar: 'wavatar'
+          })
+
+          // valine.render('valine_container')
+        </script>
+    
+    
+
+    
 
 
 
 
   </body>
 </html>
-<script type="application/javascript">
-  // 禁止使用此id key哦~~
-  new Valine({
-    el: '#vcomments',
-    appId: 'TQ68bkDunqiY78ozjQK7kLrX-gzGzoHsz',
-    appKey: '0itQcytPBGHG6eLijcqIox01',
-    visitor: true, // 阅读量统计
-    placeholder: '请输入留言...'
-  })
-</script>
+<!--<script type="application/javascript">-->
+<!--  // 禁止使用此id key哦~~-->
+<!--  new Valine({-->
+<!--    el: '#vcomments',-->
+<!--    appId: 'TQ68bkDunqiY78ozjQK7kLrX-gzGzoHsz',-->
+<!--    appKey: '0itQcytPBGHG6eLijcqIox01',-->
+<!--    visitor: true, // 阅读量统计-->
+<!--    placeholder: '请输入留言...',-->
+<!--    avatar: 'wavatar'-->
+<!--  })-->
+<!--</script>-->
 

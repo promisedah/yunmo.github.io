@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.yunmo.org.cn</id>
-    <title>Yunmo&apos; Blog</title>
-    <updated>2021-04-14T08:26:08.014Z</updated>
+    <title>yunmo私人小屋</title>
+    <updated>2021-06-01T05:44:55.154Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.yunmo.org.cn"/>
     <link rel="self" href="https://blog.yunmo.org.cn/atom.xml"/>
     <subtitle>温故而知新，见贤思齐焉，见不贤而内自省也</subtitle>
     <logo>https://blog.yunmo.org.cn/images/avatar.png</logo>
     <icon>https://blog.yunmo.org.cn/favicon.ico</icon>
-    <rights>All rights reserved 2021, Yunmo&apos; Blog</rights>
+    <rights>All rights reserved 2021, yunmo私人小屋</rights>
     <entry>
         <title type="html"><![CDATA[Maven项目打包并自动生成启动脚本]]></title>
         <id>https://blog.yunmo.org.cn/post/ccV9g317y/</id>
