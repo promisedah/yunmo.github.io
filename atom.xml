@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://139.196.229.191</id>
+    <title>yunmo私人小屋</title>
+    <updated>2025-03-21T03:59:30.348Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://139.196.229.191"/>
+    <link rel="self" href="https://139.196.229.191/atom.xml"/>
+    <subtitle>温故而知新，见贤思齐焉，见不贤而内自省也</subtitle>
+    <logo>https://139.196.229.191/images/avatar.png</logo>
+    <icon>https://139.196.229.191/favicon.ico</icon>
+    <rights>All rights reserved 2025, yunmo私人小屋</rights>
+    <entry>
+        <title type="html"><![CDATA[Maven项目打包并自动生成启动脚本]]></title>
+        <id>https://139.196.229.191/post/ccV9g317y/</id>
+        <link href="https://139.196.229.191/post/ccV9g317y/">
+        </link>
+        <updated>2020-09-12T02:41:37.000Z</updated>
+        <summary type="html"><![CDATA[<p>本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Maven存储库中的已定义汇编目录中。所有工件（依赖关系+项目中的工件）都将添加到生成的bin脚本中的类路径中。<a href="https://www.mojohaus.org/appassembler/appassembler-maven-plugin/">官网介绍</a></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Maven存储库中的已定义汇编目录中。所有工件（依赖关系+项目中的工件）都将添加到生成的bin脚本中的类路径中。<a href="https://www.mojohaus.org/appassembler/appassembler-maven-plugin/">官网介绍</a></p>
+<!-- more -->
+<p>我们先来看下打包后最终目录结构：<br>
+<img src="https://139.196.229.191/post-images/1599879737920.png" alt="" loading="lazy"></p>
+<h2 id="1目录结构介绍">1.目录结构介绍</h2>
+<blockquote>
+<p>app 是我们指定的打包文件生成的根目录，可以在项目的pom中修改配置<br>
+app/bin 启动脚本存放目录<br>
+app/conf 项目配置文件存放目录<br>
+app/lib 项目所有依赖包存放目录<br>
+app/logs 日志存放目录<br>
+app/tmp 临时文件存放目录</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>classes 是我们项目正常编译输出地址<br>
+classes/cn java文件编译目录<br>
+classes/conf 是我们指定的配置文件编译存放目录，由于我这里*.yml配置文件中存在变量引用所以最终打包配置文件信息从这个目录来copy</p>
+</blockquote>
+<!-- more -->
+<h2 id="2修改pom文件配置">2.修改pom文件配置</h2>
+<p>完整配置如下</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;yunmo-server&lt;/artifactId&gt;
+        &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+        &lt;version&gt;1.0&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;artifactId&gt;yunmo-biz-demo&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;name&gt;yunmo-biz-demo&lt;/name&gt;
+    &lt;description&gt;业务测试demo&lt;/description&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+    &lt;dependencies&gt;
+        &lt;!--基础实体类映射模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-entity&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--基础dao接口模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-dao&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--基础mapper文件模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-mapper&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--基础服务类模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-service&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-util&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-exception&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+            &lt;scope&gt;compile&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;properties&gt;
+        &lt;!-- 文件拷贝时的编码 --&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        &lt;!-- 编译时的编码 --&gt;
+        &lt;maven.compiler.encoding&gt;UTF-8&lt;/maven.compiler.encoding&gt;
+    &lt;/properties&gt;
+    &lt;build&gt;
+        &lt;resources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources&lt;/directory&gt;
+                &lt;filtering&gt;true&lt;/filtering&gt;
+                &lt;!--指定配置文件编译的目标地址，当前项目配置编译地址为:target/classes/conf--&gt;
+                &lt;targetPath&gt;conf&lt;/targetPath&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;!-- Apache Maven编译器插件 --&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;11&lt;/source&gt;
+                    &lt;target&gt;11&lt;/target&gt;
+                    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                    &lt;!-- 必须添加compilerArgument配置，才能使用JFinal的Controller方法带参数的功能 --&gt;
+                    &lt;compilerArgument&gt;-parameters&lt;/compilerArgument&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;1.10&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;!-- 文件生成的根目录 --&gt;
+                    &lt;assembleDirectory&gt;${project.build.directory}/app&lt;/assembleDirectory&gt;
+                    &lt;!-- 打包的jar，以及maven依赖的jar放到这个目录里面 --&gt;
+                    &lt;repositoryName&gt;lib&lt;/repositoryName&gt;
+                    &lt;!-- 可执行脚本的目录 --&gt;
+                    &lt;binFolder&gt;bin&lt;/binFolder&gt;
+                    &lt;!-- 配置文件的目标目录 --&gt;
+                    &lt;configurationDirectory&gt;conf&lt;/configurationDirectory&gt;
+                    &lt;!-- 拷贝配置文件到上面的目录中 --&gt;
+                    &lt;copyConfigurationDirectory&gt;true&lt;/copyConfigurationDirectory&gt;
+                    &lt;!-- 从哪里拷贝配置文件 (默认src/main/config) --&gt;
+                    &lt;!--这里由于配置文件*.yml中存在变量引用，copy时使用编译后的配置文件--&gt;
+                    &lt;configurationSourceDirectory&gt;target\classes\conf&lt;/configurationSourceDirectory&gt;
+                    &lt;!--在目标文件的开头包含目标配置目录bin脚本中的类路径声明--&gt;
+                    &lt;includeConfigurationDirectoryInClasspath&gt;true&lt;/includeConfigurationDirectoryInClasspath&gt;
+                    &lt;!-- lib目录中jar的存放规则，默认是${groupId}/${artifactId}的目录格式，flat表示直接把jar放到lib目录 --&gt;
+                    &lt;repositoryLayout&gt;flat&lt;/repositoryLayout&gt;
+                    &lt;!--解决windows脚本classpath引用jar包路径过长导致无法启动--&gt;
+                    &lt;useWildcardClassPath&gt;true&lt;/useWildcardClassPath&gt;
+                    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                    &lt;logsDirectory&gt;logs&lt;/logsDirectory&gt;
+                    &lt;tempDirectory&gt;tmp&lt;/tempDirectory&gt;
+                    &lt;!-- 生成linux, windows两种平台的执行脚本 --&gt;
+                    &lt;platforms&gt;
+                        &lt;platform&gt;windows&lt;/platform&gt;
+                        &lt;platform&gt;unix&lt;/platform&gt;
+                    &lt;/platforms&gt;
+                    &lt;programs&gt;
+                        &lt;!-- 程序打包：mvn package appassembler:assemble 可以配置多个program--&gt;
+                        &lt;program&gt;
+                            &lt;!-- 生成的脚本文件的名称 --&gt;
+                            &lt;id&gt;${project.name}&lt;/id&gt;
+                            &lt;mainClass&gt;cn.org.yunmo.bizdemo.YunmoBizDemoApplication&lt;/mainClass&gt;
+                        &lt;/program&gt;
+                    &lt;/programs&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+
+</code></pre>
+<!-- more -->
+<h3 id="注意事项">注意事项：</h3>
+<!-- more -->
+<h4 id="1配置文件编译输出路径">1.配置文件编译输出路径</h4>
+<p>如果你把配置文件编译目录的的targetPath修改了记得一定要把configurationSourceDirectory的路径也做对应修改保证copy的配置文件路径是你项目配置文件编译后输出地址</p>
+<pre><code>······
+&lt;resources&gt;
+    &lt;resource&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+        &lt;filtering&gt;true&lt;/filtering&gt;
+        &lt;!--指定配置文件编译的目标地址，当前项目配置编译地址为:target/classes/conf--&gt;
+        &lt;targetPath&gt;你的编译文件夹名称&lt;/targetPath&gt;
+    &lt;/resource&gt;
+&lt;/resources&gt;
+······
+&lt;configuration&gt;
+    ······
+    &lt;!-- 从哪里拷贝配置文件 (默认src/main/config) --&gt;
+    &lt;!--这里由于配置文件*.yml中存在变量引用，copy时使用编译后的配置文件--&gt;
+    &lt;configurationSourceDirectory&gt;target\classes\你的编译文件夹名称&lt;/configurationSourceDirectory&gt;
+    ······
+&lt;/configuration&gt;
+······
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://139.196.229.191/post-images/1599882413926.png" alt="" loading="lazy"></figure>
+<!-- more -->
+<h4 id="2配置启动函数类">2.配置启动函数类</h4>
+<p>修改mainClass标签的启动类为你项目的启动类路径<br>
+如：cn.org.yunmo.bizdemo.YunmoBizDemoApplication</p>
+<pre><code>······
+&lt;programs&gt;
+    &lt;!-- 程序打包：mvn package appassembler:assemble 可以配置多个program--&gt;
+    &lt;program&gt;
+        &lt;!-- 生成的脚本文件的名称 --&gt;
+        &lt;id&gt;${project.name}&lt;/id&gt;
+        &lt;mainClass&gt;你的启动函数类路径&lt;/mainClass&gt;
+    &lt;/program&gt;
+&lt;/programs&gt;
+······
+</code></pre>
+<p>你使用时候只需要把上面<code>&lt;build&gt;...&lt;/build&gt;</code>标签中的内容复制到你的项目中的pom中，把主程序启动函数<code>&lt;mainClass&gt;...&lt;/mainClass&gt;</code>地址修改为你的springboot启动类路径就可以啦</p>
+<!-- more -->
+<h2 id="3maven打包">3.maven打包</h2>
+<p>有两种方式来打包</p>
+<h4 id="1-idea配置打包建议">1、idea配置打包（建议）</h4>
+<p>首先我们来配置个maven启动项，点击点击启动项后面的倒三角<br>
+<img src="https://139.196.229.191/post-images/1599889884668.png" alt="" loading="lazy"><br>
+然后我们点击Edit Configurations...<br>
+<img src="https://139.196.229.191/post-images/1599889927847.png" alt="" loading="lazy"><br>
+点击左上方 + 号 找到maven然后点击<br>
+<img src="https://139.196.229.191/post-images/1599890426927.png" alt="" loading="lazy"><br>
+选择你的maven项目（1、2），输入打包命令（3），第4步可以选择你打包需要使用的配置文件填写对应的后缀名我这里就用-dev使用dev配置文件，点击apply（5），最后点击ok（6）保存配置<br>
+<img src="https://139.196.229.191/post-images/1599890463336.png" alt="" loading="lazy"><br>
+随后你就会看到上面启动项中多了刚才添加的maven打包配置，选择刚才配置的maven启动项，点击run执行（建议打包前先执行一次maven clean，防止有其他编译文件影响打包内容）<br>
+<img src="https://139.196.229.191/post-images/1599890896062.png" alt="" loading="lazy"><br>
+成功执行后控制台会输出 BUILD SUCCESS，点开target目录你就会发现目录下多了个我们开头介绍的app文件夹，这就是我们打包后的文件夹<br>
+<img src="https://139.196.229.191/post-images/1599891064328.png" alt="" loading="lazy"><br>
+<img src="https://139.196.229.191/post-images/1599895094099.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>注意: 如果你修改了pom中打包根目录配置<code>&lt;assembleDirectory&gt;${project.build.directory}/app&lt;/assembleDirectory&gt;</code> 那么这个文件夹位置名称会跟着发生改变</p>
+<!-- more -->
+<h4 id="2-使用命令行命令打包-需要配置maven环境变量">2、使用命令行命令打包 （需要配置maven环境变量）</h4>
+<p>首先查看是否已经配置maven环境变量</p>
+<pre><code>mvn -v
+</code></pre>
+<p>如果已经配置会输出类似如下结果：路径版本号等，如果没有配置则需配置maven环境变量这里不再演示<br>
+<img src="https://139.196.229.191/post-images/1599899116017.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>进入项目根目录，并输入打包命令</p>
+<pre><code>cd D:\IProject\yunmo\yunmo-server\yunmo-biz-demo
+
+mvn package appassembler:assemble
+</code></pre>
+<p><img src="https://139.196.229.191/post-images/1599899303996.png" alt="" loading="lazy"><br>
+打包成功一样会在控制台输出 BUILD SUCCESS 和一些打包信息。<br>
+如copy了几个配置文件到哪里，耗时多久等信息，并会生成对应打包目录app</p>
+<!-- more -->
+<h2 id="4启动项目">4.启动项目</h2>
+<p>找到打包后的文件夹targer/app，我们点开bin目录会有两个文件.bat结尾的是windows启动脚本，另一个是linux启动脚本<br>
+<img src="https://139.196.229.191/post-images/1599891905875.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h4 id="windows启动">windows启动</h4>
+<ol>
+<li>直接双击bat脚本启动</li>
+<li>通过命令行或idea终端（Terminal）进入到当前bin目录路径，输入你的脚本名称.bat，回车</li>
+</ol>
+<pre><code>cd target\app\bin
+
+yunmo-biz-demo.bat
+</code></pre>
+<p>cmd<br>
+<img src="https://139.196.229.191/post-images/1599892586945.png" alt="" loading="lazy"><br>
+idea<br>
+<img src="https://139.196.229.191/post-images/1599892593469.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h4 id="linux启动">linux启动</h4>
+<pre><code>./app/bin/yunmo-biz-demo
+
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://139.196.229.191/post-images/1599898585408.png" alt="" loading="lazy"></figure>
+<h2 id="5服务验证">5.服务验证</h2>
+<p>从启动的控制台找到你的端口和content path(springboot项目默认为'')<br>
+<img src="https://139.196.229.191/post-images/1599892803473.png" alt="" loading="lazy"><br>
+打开浏览器输入你的项目地址， ip:端口/content path，我这里content path为空可以不填，出现下面这个界面就表示成功了</p>
+<blockquote>
+<p>localhost:9101</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://139.196.229.191/post-images/1599893080040.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>localhost:9101/customerMessage/aboutMe</p>
+</blockquote>
+<figure data-type="image" tabindex="4"><img src="https://139.196.229.191/post-images/1599895758564.png" alt="" loading="lazy"></figure>
+<!-- more -->
+<p>🌈 以上就是全部步骤啦，有问题欢迎在下方给我留言~</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Jenkins定时构建Maven项目]]></title>
+        <id>https://139.196.229.191/post/jenkins-schedule-build/</id>
+        <link href="https://139.196.229.191/post/jenkins-schedule-build/">
+        </link>
+        <updated>2020-09-09T09:46:43.000Z</updated>
+        <summary type="html"><![CDATA[<p>定时构建语法如下:</p>
+<pre><code>* * * * *
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>定时构建语法如下:</p>
+<pre><code>* * * * *
+</code></pre>
+<!-- more -->
+<p>第一个<em>表示分钟，取值0~59<br>
+第二个</em>表示小时，取值0~23<br>
+第三个<em>表示一个月的第几天，取值1~31<br>
+第四个</em>表示第几月，取值1~12<br>
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</p>
+<!-- more -->
+<p>这里的时间表达式的配置和Linux系统的crontab命令的时间表达式一样的 ，这里不多说了。<a href="https://www.lenar.io/jenkins-schedule-build-periodically/">详细介绍</a></p>
+<!-- more -->
+<p>如:</p>
+<pre><code>0-59/10 * * * *     #十分钟构建一次
+H H/3 * * *      #三个小时构建一次
+H 0 * * *     #每天晚上0点构建一次
+</code></pre>
+<p>步骤如下：</p>
+<!-- more -->
+<p><img src="https://139.196.229.191/post-images/1599646310973.jpg" alt="" loading="lazy"><br>
+<img src="https://139.196.229.191/post-images/1599646316508.jpg" alt="" loading="lazy"></p>
+<!-- more -->
+<p>结果：<br>
+<img src="https://139.196.229.191/post-images/1599698361147.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？]]></title>
+        <id>https://139.196.229.191/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/</id>
+        <link href="https://139.196.229.191/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
+        </link>
+        <updated>2020-08-31T05:55:53.000Z</updated>
+        <summary type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
+<!-- more -->
+<blockquote>
+<p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
+</blockquote>
+<!-- more -->
+<p>先连接登录mysql</p>
+<pre><code>mysql -uroot -p
+
+Enter password: #输入数据库的root密码，默认不显示密码
+</code></pre>
+<!-- more -->
+<p>创建用户并授权允许所有访问地址。</p>
+<pre><code># db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
+create user db_user@'%' identified by 'db_password'; 
+</code></pre>
+<!-- more -->
+<blockquote>
+<p>⚠️注意：远程连接记得开放服务器mysql远程端口，如果是云服务器云端口也要开放。</p>
+</blockquote>
+<p>如果您的操作系统为CentOS系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+service iptables save #保存iptables规则
+</code></pre>
+<p>如果您的操作系统为Ubuntu/Debian系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+iptables-save &gt; /etc/iptables.up.rules  #保存iptables规则
+</code></pre>
+<blockquote>
+<p>如：添加一个用户名为db_user，密码为db_pass，授权为% （%表示所有外围IP能连接）对db_name数据库所有权限</p>
+</blockquote>
+<!-- more -->
+<p>完整命令如下:</p>
+<pre><code>mysql -uroot -p
+
+Enter password: #输入数据库的root密码，默认不显示密码
+
+MySQL [(none)]&gt; create user db_user@'%' identified by 'db_password'; #创建用户并授权允许所有访问地址。%表示授权所有地址
+
+MySQL [(none)]&gt; grant all privileges on db_name.* to db_user@'%' identified 
+by 'db_pass'; #授权语句，特别注意有分号
+
+MySQL [(none)]&gt; flush privileges; #权限立即生效
+
+MySQL [(none)]&gt; exit; #退出数据库控制台，特别注意有分号
+
+</code></pre>
+<p>例：</p>
+<!-- more --> 
+<pre><code>create user yunmo_test@'%' identified by 'yunmo'; 
+
+grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
+
+flush privileges;
+
+exit;
+
+</code></pre>
+<!-- more -->
+<p>😘 现在就可以用刚才创建的用户去连接啦~</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[基于浏览器的视频通话如何实现网络穿透找到内网目标地址？]]></title>
+        <id>https://139.196.229.191/post/csk1jrrgK/</id>
+        <link href="https://139.196.229.191/post/csk1jrrgK/">
+        </link>
+        <updated>2020-08-30T06:45:06.000Z</updated>
+        <summary type="html"><![CDATA[<p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
+<!-- more -->
+<h2 id="首先你需要一台公网ip的服务器">首先你需要一台公网ip的服务器</h2>
+<h3 id="基于coturn项目的stunturn服务器搭建">基于coturn项目的stun/turn服务器搭建</h3>
+<!-- more -->
+<p>通过stun/turn中继服务器，我们就可以通过公网IP地址来解析找到发起请求的内网IP地址（即：躲在路由器或交换机后的电脑）</p>
+<p>我这边采用<a href="https://peerjs.com/">PeerJs</a>库来建立P2P数据或媒体流连接。</p>
+<p>实际测试，中继服务器还是会存在找不到内网地址的情况。</p>
+<h3 id="经过调试webrtc已成功建立连接的浏览器有">经过调试WebRTC已成功建立连接的浏览器有：</h3>
+<!-- more -->
+<blockquote>
+<p>PC to PC:<br>
+Chrome to Chrome</p>
+</blockquote>
+<blockquote>
+<p>PC to Mobile（IOS）:<br>
+Chrome to Safari</p>
+</blockquote>
+<blockquote>
+<p>PC to  Mobile（Android）:<br>
+Chrome to Chrome</p>
+</blockquote>
+<!-- more -->
+<h3 id="coturn安装">coturn安装</h3>
+<blockquote>
+<p>首先从git仓库clone下来</p>
+</blockquote>
+<pre><code>git clone https://github.com/coturn/coturn.git
+
+cd ~/path #进去clone项目地址根目录
+</code></pre>
+<blockquote>
+<p>编译安装</p>
+</blockquote>
+<pre><code>./configure --prefix=/usr/local/coturn make &amp; sudo make install
+</code></pre>
+<blockquote>
+<p>命令模式启动服务</p>
+</blockquote>
+<pre><code>turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=your.name:your.passwod -r your.domain -L your.ip
+</code></pre>
+<p>例：</p>
+<pre><code>./turnserver -o -v -f -a -m 2 --max-bps=100000 --min-port=32355 --max-port=65535 --user=yunmo:123 -r yunmo.org.cn -L 172.19.189.21
+</code></pre>
+<blockquote>
+<p>-o 以守护进程模式运行（后台运行）<br>
+-v 日志会以“适度详细”的程度来记录<br>
+-f  增加指纹机制<br>
+-a 长期验证机制<br>
+-m 以x个进程来处理中继请求<br>
+--max-bps 带宽<br>
+--min-port   起始用的最小端口<br>
+--max-port   最大端口号<br>
+--user=帐号：密码 (turn服务的用户验证机制要用)<br>
+-r  域名<br>
+-L 监听IP(turn服务器的ip)这个ip是你ifconfig查到的ip，不是你的公网ip<br>
+-X   后面加 public ip/ private ip       多IP情况下使用，有几个ip就用几次</p>
+</blockquote>
+]]></content>
+    </entry>
+</feed>
