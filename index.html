@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>允默</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://yunmo.org.cn/favicon.ico?v=1742994174075">
+<link rel="stylesheet" href="https://yunmo.org.cn/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177245599-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177245599-1');
+</script>
+
+
+    <meta name="description" content="温故而知新，见贤思齐焉，见不贤而内自省也">
+    
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://yunmo.org.cn">
+        <img src="https://yunmo.org.cn/images/avatar.png?v=1742994174075" class="site-logo">
+        <h1 class="site-title">允默</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            🏠 首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            📚 归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            🏷 标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            💦 关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/promisedah" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新，见贤思齐焉，见不贤而内自省也
+    </div>
+    <div class="site-footer">
+      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a> | <a class="rss" href="https://yunmo.org.cn/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://yunmo.org.cn/post/ccV9g317y/">
+                  <h2 class="post-title">Maven项目打包并自动生成启动脚本</h2>
+                </a>
+                <div class="post-date">
+                  2020-09-12 10:09
+                </div>
+                <div class="post-abstract">
+                  <p>本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Maven存储库中的已定义汇编目录中。所有工件（依赖关系+项目中的工件）都将添加到生成的bin脚本中的类路径中。<a href="https://www.mojohaus.org/appassembler/appassembler-maven-plugin/">官网介绍</a></p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://yunmo.org.cn/post/ccV9g317y/">
+                  <div class="feature-container" style="background-image: url('https://lh6.googleusercontent.com/proxy/ZSfugsLt5lHBURje2F6XiNhVsZ4RuoXRQBlzDhCIEQq00f8aDsEtoL1G9B4tZSrLg0bEwB2VgZW-szG5PgAtdMornkOAVxceoP-m6GesnFE=w3840-h2160-p-k-no-nd-mv')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://yunmo.org.cn/post/jenkins-schedule-build/">
+                  <h2 class="post-title">Jenkins定时构建Maven项目</h2>
+                </a>
+                <div class="post-date">
+                  2020-09-09 17:09
+                </div>
+                <div class="post-abstract">
+                  <p>定时构建语法如下:</p>
+<pre><code>* * * * *
+</code></pre>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://yunmo.org.cn/post/jenkins-schedule-build/">
+                  <div class="feature-container" style="background-image: url('https://yunmo.org.cn/post-images/jenkins-schedule-build.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
+                  <h2 class="post-title">MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？</h2>
+                </a>
+                <div class="post-date">
+                  2020-08-31 13:08
+                </div>
+                <div class="post-abstract">
+                  <p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
+                  <div class="feature-container" style="background-image: url('https://yunmo.org.cn/post-images/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian.jpeg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://yunmo.org.cn/post/csk1jrrgK/">
+                  <h2 class="post-title">基于浏览器的视频通话如何实现网络穿透找到内网目标地址？</h2>
+                </a>
+                <div class="post-date">
+                  2020-08-30 14:08
+                </div>
+                <div class="post-abstract">
+                  <p>WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写，是一个支持网页浏览器进行实时语音对话或视频对话的API。它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。<a href="https://zh.wikipedia.org/wiki/WebRTC">维基百科介绍</a></p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://yunmo.org.cn/post/csk1jrrgK/">
+                  <div class="feature-container" style="background-image: url('https://yunmo.org.cn/post-images/csk1jrrgK.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

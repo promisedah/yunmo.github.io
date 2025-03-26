@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>记一次微信公众号迁移 | 允默</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://yunmo.org.cn/favicon.ico?v=1742994174075">
+<link rel="stylesheet" href="https://yunmo.org.cn/styles/main.css">
+
+
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177245599-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177245599-1');
+</script>
+
+
+    <meta name="description" content="
+说起来这都是快半年前的事情了，1月初接到消息说我司有个子公司要尽快注销，最多是到1月底，同时这个公众要又快要年检，如果主体信息注销了年检肯定过不去，大部分用户也都是在这个公众号。这个子公司呢是我这边所负责的其中一个公众号绑定的主体信息，这..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://yunmo.org.cn">
+        <img src="https://yunmo.org.cn/images/avatar.png?v=1742994174075" class="site-logo">
+        <h1 class="site-title">允默</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            🏠 首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            📚 归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            🏷 标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            💦 关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/promisedah" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新，见贤思齐焉，见不贤而内自省也
+    </div>
+    <div class="site-footer">
+      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a> | <a class="rss" href="https://yunmo.org.cn/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">记一次微信公众号迁移</h2>
+            <div class="post-date">2021-06-01 15:06</div>
+            
+              <div class="feature-container" style="background-image: url('https://yunmo.org.cn/post-images/QmIRqLkN7.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <!-- more -->
+<p>说起来这都是快半年前的事情了，1月初接到消息说我司有个子公司要尽快注销，最多是到1月底，同时这个公众要又快要年检，如果主体信息注销了年检肯定过不去，大部分用户也都是在这个公众号。这个子公司呢是我这边所负责的其中一个公众号绑定的主体信息，这里就暂且称这个公众号为A公众号吧。决定把A公众号迁移到B公众号上，但此时B公众号的功能并没有A公众号完整，如：对于我们业务及客户特别重要的模板消息通知此时就缺失，两个公众号的数据库存储分别在两个库，这还不是最要命的，最要命的是两个库表结构完全不一样。</p>
+<p>最终目标：</p>
+<p>1、用户不能受影响，无感知从A切换到B，功能正常使用<br>
+2、我作为A用户来到了B，我在A维护的所有数据在B都能使用</p>
+<p>最后的迁移流程决定这样走：</p>
+<p>第一步：首先完善B公众功能，追赶上A<br>
+第二步：用户信息的转换<br>
+第三步：用户数据的同步</p>
+<!-- more -->
+<p>要保证A公众号上用户到B后能够正常操作下单且用户在A公众号的数据全部要在B公众号可以查到，未完成迁移前2个公众号是在同时在运营的，就是说我作为一个用户/客户来讲，不管我在A还是在B我都能正常操作，并且我在B能使用我已经在A维护的数据。</p>
+<!-- more -->
+<p>我们来分析一下微信官方给出的迁移流程图：<br>
+<img src="https://yunmo.org.cn/post-images/1622534181353.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+            
+
+            
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+
+  
+
+
+
+
+  </body>
+</html>

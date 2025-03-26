@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Jenkins定时构建Maven项目 | 允默</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://yunmo.org.cn/favicon.ico?v=1742994174075">
+<link rel="stylesheet" href="https://yunmo.org.cn/styles/main.css">
+
+
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177245599-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177245599-1');
+</script>
+
+
+    <meta name="description" content="定时构建语法如下:
+* * * * *
+
+
+第一个表示分钟，取值0~59
+第二个表示小时，取值0~23
+第三个表示一个月的第几天，取值1~31
+第四个表示第几月，取值1~12
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日..." />
+    <meta name="keywords" content="Jenkins" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://yunmo.org.cn">
+        <img src="https://yunmo.org.cn/images/avatar.png?v=1742994174075" class="site-logo">
+        <h1 class="site-title">允默</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            🏠 首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            📚 归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            🏷 标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            💦 关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/promisedah" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新，见贤思齐焉，见不贤而内自省也
+    </div>
+    <div class="site-footer">
+      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a> | <a class="rss" href="https://yunmo.org.cn/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Jenkins定时构建Maven项目</h2>
+            <div class="post-date">2020-09-09 17:09</div>
+            
+              <div class="feature-container" style="background-image: url('https://yunmo.org.cn/post-images/jenkins-schedule-build.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>定时构建语法如下:</p>
+<pre><code>* * * * *
+</code></pre>
+<!-- more -->
+<p>第一个<em>表示分钟，取值0~59<br>
+第二个</em>表示小时，取值0~23<br>
+第三个<em>表示一个月的第几天，取值1~31<br>
+第四个</em>表示第几月，取值1~12<br>
+第五个*表示一周中的第几天，取值0~7，其中0和7代表的都是周日</p>
+<!-- more -->
+<p>这里的时间表达式的配置和Linux系统的crontab命令的时间表达式一样的 ，这里不多说了。<a href="https://www.lenar.io/jenkins-schedule-build-periodically/">详细介绍</a></p>
+<!-- more -->
+<p>如:</p>
+<pre><code>0-59/10 * * * *     #十分钟构建一次
+H H/3 * * *      #三个小时构建一次
+H 0 * * *     #每天晚上0点构建一次
+</code></pre>
+<p>步骤如下：</p>
+<!-- more -->
+<p><img src="https://yunmo.org.cn/post-images/1599646310973.jpg" alt="" loading="lazy"><br>
+<img src="https://yunmo.org.cn/post-images/1599646316508.jpg" alt="" loading="lazy"></p>
+<!-- more -->
+<p>结果：<br>
+<img src="https://yunmo.org.cn/post-images/1599698361147.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://yunmo.org.cn/tag/jenkins/" class="tag">
+                    Jenkins
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://yunmo.org.cn/post/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian/">
+                  <h3 class="post-title">
+                    MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+
+  
+
+
+
+
+  </body>
+</html>

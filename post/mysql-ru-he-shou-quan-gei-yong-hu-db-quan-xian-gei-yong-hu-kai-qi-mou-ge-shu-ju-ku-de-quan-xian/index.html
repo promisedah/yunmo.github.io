@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？ | 允默</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://yunmo.org.cn/favicon.ico?v=1742994174075">
+<link rel="stylesheet" href="https://yunmo.org.cn/styles/main.css">
+
+
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177245599-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177245599-1');
+</script>
+
+
+    <meta name="description" content="MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?
+
+
+为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。
+
+
+先连接登录mysql
+mysql -uroot -p
+
+Enter password:..." />
+    <meta name="keywords" content="MySQL" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://yunmo.org.cn">
+        <img src="https://yunmo.org.cn/images/avatar.png?v=1742994174075" class="site-logo">
+        <h1 class="site-title">允默</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            🏠 首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            📚 归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            🏷 标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            💦 关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/promisedah" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新，见贤思齐焉，见不贤而内自省也
+    </div>
+    <div class="site-footer">
+      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a> | <a class="rss" href="https://yunmo.org.cn/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限？</h2>
+            <div class="post-date">2020-08-31 13:08</div>
+            
+              <div class="feature-container" style="background-image: url('https://yunmo.org.cn/post-images/mysql-ru-he-shou-quan-gei-yong-hu-db-quan-xian-gei-yong-hu-kai-qi-mou-ge-shu-ju-ku-de-quan-xian.jpeg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>MySQL 如何授权给用户DB权限给远程用户开启某个数据库的权限?</p>
+<!-- more -->
+<blockquote>
+<p>为了安全起见我们最好新建一个用户作为远程链接的账号（帐号名不能为root）。</p>
+</blockquote>
+<!-- more -->
+<p>先连接登录mysql</p>
+<pre><code>mysql -uroot -p
+
+Enter password: #输入数据库的root密码，默认不显示密码
+</code></pre>
+<!-- more -->
+<p>创建用户并授权允许所有访问地址。</p>
+<pre><code># db_user：创建的用户名；%：表示授权允许所有地址连接；db_password：用户密码
+create user db_user@'%' identified by 'db_password'; 
+</code></pre>
+<!-- more -->
+<blockquote>
+<p>⚠️注意：远程连接记得开放服务器mysql远程端口，如果是云服务器云端口也要开放。</p>
+</blockquote>
+<p>如果您的操作系统为CentOS系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+service iptables save #保存iptables规则
+</code></pre>
+<p>如果您的操作系统为Ubuntu/Debian系列：</p>
+<pre><code>iptables -I INPUT 4 -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+iptables-save &gt; /etc/iptables.up.rules  #保存iptables规则
+</code></pre>
+<blockquote>
+<p>如：添加一个用户名为db_user，密码为db_pass，授权为% （%表示所有外围IP能连接）对db_name数据库所有权限</p>
+</blockquote>
+<!-- more -->
+<p>完整命令如下:</p>
+<pre><code>mysql -uroot -p
+
+Enter password: #输入数据库的root密码，默认不显示密码
+
+MySQL [(none)]&gt; create user db_user@'%' identified by 'db_password'; #创建用户并授权允许所有访问地址。%表示授权所有地址
+
+MySQL [(none)]&gt; grant all privileges on db_name.* to db_user@'%' identified 
+by 'db_pass'; #授权语句，特别注意有分号
+
+MySQL [(none)]&gt; flush privileges; #权限立即生效
+
+MySQL [(none)]&gt; exit; #退出数据库控制台，特别注意有分号
+
+</code></pre>
+<p>例：</p>
+<!-- more --> 
+<pre><code>create user yunmo_test@'%' identified by 'yunmo'; 
+
+grant all privileges on yunmo_test.* to yunmo@'%' identified by 'yunmo';
+
+flush privileges;
+
+exit;
+
+</code></pre>
+<!-- more -->
+<p>😘 现在就可以用刚才创建的用户去连接啦~</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://yunmo.org.cn/tag/4XafjaIkY/" class="tag">
+                    MySQL
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://yunmo.org.cn/post/csk1jrrgK/">
+                  <h3 class="post-title">
+                    基于浏览器的视频通话如何实现网络穿透找到内网目标地址？
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+
+  
+
+
+
+
+  </body>
+</html>

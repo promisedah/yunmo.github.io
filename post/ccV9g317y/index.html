@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Maven项目打包并自动生成启动脚本 | 允默</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://yunmo.org.cn/favicon.ico?v=1742994174075">
+<link rel="stylesheet" href="https://yunmo.org.cn/styles/main.css">
+
+
+  
+
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177245599-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-177245599-1');
+</script>
+
+
+    <meta name="description" content="本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Ma..." />
+    <meta name="keywords" content="Java,Maven" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://yunmo.org.cn">
+        <img src="https://yunmo.org.cn/images/avatar.png?v=1742994174075" class="site-logo">
+        <h1 class="site-title">允默</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            🏠 首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            📚 归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            🏷 标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            💦 关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/promisedah" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新，见贤思齐焉，见不贤而内自省也
+    </div>
+    <div class="site-footer">
+      <a href='https://beian.miit.gov.cn/' target='_blank'>豫ICP备17050546号</a> | <a class="rss" href="https://yunmo.org.cn/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Maven项目打包并自动生成启动脚本</h2>
+            <div class="post-date">2020-09-12 10:09</div>
+            
+              <div class="feature-container" style="background-image: url('https://lh6.googleusercontent.com/proxy/ZSfugsLt5lHBURje2F6XiNhVsZ4RuoXRQBlzDhCIEQq00f8aDsEtoL1G9B4tZSrLg0bEwB2VgZW-szG5PgAtdMornkOAVxceoP-m6GesnFE=w3840-h2160-p-k-no-nd-mv')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>本文采用appassembler-maven-plugin插件来配置打包并生成脚本，Application Assembler插件是一个Maven插件，用于生成用于启动Java应用程序的脚本。项目本身的所有依赖关系和工件都放置在已生成的Maven存储库中的已定义汇编目录中。所有工件（依赖关系+项目中的工件）都将添加到生成的bin脚本中的类路径中。<a href="https://www.mojohaus.org/appassembler/appassembler-maven-plugin/">官网介绍</a></p>
+<!-- more -->
+<p>我们先来看下打包后最终目录结构：<br>
+<img src="https://yunmo.org.cn/post-images/1599879737920.png" alt="" loading="lazy"></p>
+<h2 id="1目录结构介绍">1.目录结构介绍</h2>
+<blockquote>
+<p>app 是我们指定的打包文件生成的根目录，可以在项目的pom中修改配置<br>
+app/bin 启动脚本存放目录<br>
+app/conf 项目配置文件存放目录<br>
+app/lib 项目所有依赖包存放目录<br>
+app/logs 日志存放目录<br>
+app/tmp 临时文件存放目录</p>
+</blockquote>
+<!-- more -->
+<blockquote>
+<p>classes 是我们项目正常编译输出地址<br>
+classes/cn java文件编译目录<br>
+classes/conf 是我们指定的配置文件编译存放目录，由于我这里*.yml配置文件中存在变量引用所以最终打包配置文件信息从这个目录来copy</p>
+</blockquote>
+<!-- more -->
+<h2 id="2修改pom文件配置">2.修改pom文件配置</h2>
+<p>完整配置如下</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;yunmo-server&lt;/artifactId&gt;
+        &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+        &lt;version&gt;1.0&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;artifactId&gt;yunmo-biz-demo&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;name&gt;yunmo-biz-demo&lt;/name&gt;
+    &lt;description&gt;业务测试demo&lt;/description&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+    &lt;dependencies&gt;
+        &lt;!--基础实体类映射模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-entity&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--基础dao接口模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-dao&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--基础mapper文件模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-mapper&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--基础服务类模块--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-base-service&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-util&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.org.yunmo&lt;/groupId&gt;
+            &lt;artifactId&gt;yunmo-exception&lt;/artifactId&gt;
+            &lt;version&gt;${yunmo.version}&lt;/version&gt;
+            &lt;scope&gt;compile&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;properties&gt;
+        &lt;!-- 文件拷贝时的编码 --&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        &lt;!-- 编译时的编码 --&gt;
+        &lt;maven.compiler.encoding&gt;UTF-8&lt;/maven.compiler.encoding&gt;
+    &lt;/properties&gt;
+    &lt;build&gt;
+        &lt;resources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources&lt;/directory&gt;
+                &lt;filtering&gt;true&lt;/filtering&gt;
+                &lt;!--指定配置文件编译的目标地址，当前项目配置编译地址为:target/classes/conf--&gt;
+                &lt;targetPath&gt;conf&lt;/targetPath&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;!-- Apache Maven编译器插件 --&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;11&lt;/source&gt;
+                    &lt;target&gt;11&lt;/target&gt;
+                    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                    &lt;!-- 必须添加compilerArgument配置，才能使用JFinal的Controller方法带参数的功能 --&gt;
+                    &lt;compilerArgument&gt;-parameters&lt;/compilerArgument&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;1.10&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;!-- 文件生成的根目录 --&gt;
+                    &lt;assembleDirectory&gt;${project.build.directory}/app&lt;/assembleDirectory&gt;
+                    &lt;!-- 打包的jar，以及maven依赖的jar放到这个目录里面 --&gt;
+                    &lt;repositoryName&gt;lib&lt;/repositoryName&gt;
+                    &lt;!-- 可执行脚本的目录 --&gt;
+                    &lt;binFolder&gt;bin&lt;/binFolder&gt;
+                    &lt;!-- 配置文件的目标目录 --&gt;
+                    &lt;configurationDirectory&gt;conf&lt;/configurationDirectory&gt;
+                    &lt;!-- 拷贝配置文件到上面的目录中 --&gt;
+                    &lt;copyConfigurationDirectory&gt;true&lt;/copyConfigurationDirectory&gt;
+                    &lt;!-- 从哪里拷贝配置文件 (默认src/main/config) --&gt;
+                    &lt;!--这里由于配置文件*.yml中存在变量引用，copy时使用编译后的配置文件--&gt;
+                    &lt;configurationSourceDirectory&gt;target\classes\conf&lt;/configurationSourceDirectory&gt;
+                    &lt;!--在目标文件的开头包含目标配置目录bin脚本中的类路径声明--&gt;
+                    &lt;includeConfigurationDirectoryInClasspath&gt;true&lt;/includeConfigurationDirectoryInClasspath&gt;
+                    &lt;!-- lib目录中jar的存放规则，默认是${groupId}/${artifactId}的目录格式，flat表示直接把jar放到lib目录 --&gt;
+                    &lt;repositoryLayout&gt;flat&lt;/repositoryLayout&gt;
+                    &lt;!--解决windows脚本classpath引用jar包路径过长导致无法启动--&gt;
+                    &lt;useWildcardClassPath&gt;true&lt;/useWildcardClassPath&gt;
+                    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                    &lt;logsDirectory&gt;logs&lt;/logsDirectory&gt;
+                    &lt;tempDirectory&gt;tmp&lt;/tempDirectory&gt;
+                    &lt;!-- 生成linux, windows两种平台的执行脚本 --&gt;
+                    &lt;platforms&gt;
+                        &lt;platform&gt;windows&lt;/platform&gt;
+                        &lt;platform&gt;unix&lt;/platform&gt;
+                    &lt;/platforms&gt;
+                    &lt;programs&gt;
+                        &lt;!-- 程序打包：mvn package appassembler:assemble 可以配置多个program--&gt;
+                        &lt;program&gt;
+                            &lt;!-- 生成的脚本文件的名称 --&gt;
+                            &lt;id&gt;${project.name}&lt;/id&gt;
+                            &lt;mainClass&gt;cn.org.yunmo.bizdemo.YunmoBizDemoApplication&lt;/mainClass&gt;
+                        &lt;/program&gt;
+                    &lt;/programs&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+
+</code></pre>
+<!-- more -->
+<h3 id="注意事项">注意事项：</h3>
+<!-- more -->
+<h4 id="1配置文件编译输出路径">1.配置文件编译输出路径</h4>
+<p>如果你把配置文件编译目录的的targetPath修改了记得一定要把configurationSourceDirectory的路径也做对应修改保证copy的配置文件路径是你项目配置文件编译后输出地址</p>
+<pre><code>······
+&lt;resources&gt;
+    &lt;resource&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+        &lt;filtering&gt;true&lt;/filtering&gt;
+        &lt;!--指定配置文件编译的目标地址，当前项目配置编译地址为:target/classes/conf--&gt;
+        &lt;targetPath&gt;你的编译文件夹名称&lt;/targetPath&gt;
+    &lt;/resource&gt;
+&lt;/resources&gt;
+······
+&lt;configuration&gt;
+    ······
+    &lt;!-- 从哪里拷贝配置文件 (默认src/main/config) --&gt;
+    &lt;!--这里由于配置文件*.yml中存在变量引用，copy时使用编译后的配置文件--&gt;
+    &lt;configurationSourceDirectory&gt;target\classes\你的编译文件夹名称&lt;/configurationSourceDirectory&gt;
+    ······
+&lt;/configuration&gt;
+······
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://yunmo.org.cn/post-images/1599882413926.png" alt="" loading="lazy"></figure>
+<!-- more -->
+<h4 id="2配置启动函数类">2.配置启动函数类</h4>
+<p>修改mainClass标签的启动类为你项目的启动类路径<br>
+如：cn.org.yunmo.bizdemo.YunmoBizDemoApplication</p>
+<pre><code>······
+&lt;programs&gt;
+    &lt;!-- 程序打包：mvn package appassembler:assemble 可以配置多个program--&gt;
+    &lt;program&gt;
+        &lt;!-- 生成的脚本文件的名称 --&gt;
+        &lt;id&gt;${project.name}&lt;/id&gt;
+        &lt;mainClass&gt;你的启动函数类路径&lt;/mainClass&gt;
+    &lt;/program&gt;
+&lt;/programs&gt;
+······
+</code></pre>
+<p>你使用时候只需要把上面<code>&lt;build&gt;...&lt;/build&gt;</code>标签中的内容复制到你的项目中的pom中，把主程序启动函数<code>&lt;mainClass&gt;...&lt;/mainClass&gt;</code>地址修改为你的springboot启动类路径就可以啦</p>
+<!-- more -->
+<h2 id="3maven打包">3.maven打包</h2>
+<p>有两种方式来打包</p>
+<h4 id="1-idea配置打包建议">1、idea配置打包（建议）</h4>
+<p>首先我们来配置个maven启动项，点击点击启动项后面的倒三角<br>
+<img src="https://yunmo.org.cn/post-images/1599889884668.png" alt="" loading="lazy"><br>
+然后我们点击Edit Configurations...<br>
+<img src="https://yunmo.org.cn/post-images/1599889927847.png" alt="" loading="lazy"><br>
+点击左上方 + 号 找到maven然后点击<br>
+<img src="https://yunmo.org.cn/post-images/1599890426927.png" alt="" loading="lazy"><br>
+选择你的maven项目（1、2），输入打包命令（3），第4步可以选择你打包需要使用的配置文件填写对应的后缀名我这里就用-dev使用dev配置文件，点击apply（5），最后点击ok（6）保存配置<br>
+<img src="https://yunmo.org.cn/post-images/1599890463336.png" alt="" loading="lazy"><br>
+随后你就会看到上面启动项中多了刚才添加的maven打包配置，选择刚才配置的maven启动项，点击run执行（建议打包前先执行一次maven clean，防止有其他编译文件影响打包内容）<br>
+<img src="https://yunmo.org.cn/post-images/1599890896062.png" alt="" loading="lazy"><br>
+成功执行后控制台会输出 BUILD SUCCESS，点开target目录你就会发现目录下多了个我们开头介绍的app文件夹，这就是我们打包后的文件夹<br>
+<img src="https://yunmo.org.cn/post-images/1599891064328.png" alt="" loading="lazy"><br>
+<img src="https://yunmo.org.cn/post-images/1599895094099.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>注意: 如果你修改了pom中打包根目录配置<code>&lt;assembleDirectory&gt;${project.build.directory}/app&lt;/assembleDirectory&gt;</code> 那么这个文件夹位置名称会跟着发生改变</p>
+<!-- more -->
+<h4 id="2-使用命令行命令打包-需要配置maven环境变量">2、使用命令行命令打包 （需要配置maven环境变量）</h4>
+<p>首先查看是否已经配置maven环境变量</p>
+<pre><code>mvn -v
+</code></pre>
+<p>如果已经配置会输出类似如下结果：路径版本号等，如果没有配置则需配置maven环境变量这里不再演示<br>
+<img src="https://yunmo.org.cn/post-images/1599899116017.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>进入项目根目录，并输入打包命令</p>
+<pre><code>cd D:\IProject\yunmo\yunmo-server\yunmo-biz-demo
+
+mvn package appassembler:assemble
+</code></pre>
+<p><img src="https://yunmo.org.cn/post-images/1599899303996.png" alt="" loading="lazy"><br>
+打包成功一样会在控制台输出 BUILD SUCCESS 和一些打包信息。<br>
+如copy了几个配置文件到哪里，耗时多久等信息，并会生成对应打包目录app</p>
+<!-- more -->
+<h2 id="4启动项目">4.启动项目</h2>
+<p>找到打包后的文件夹targer/app，我们点开bin目录会有两个文件.bat结尾的是windows启动脚本，另一个是linux启动脚本<br>
+<img src="https://yunmo.org.cn/post-images/1599891905875.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h4 id="windows启动">windows启动</h4>
+<ol>
+<li>直接双击bat脚本启动</li>
+<li>通过命令行或idea终端（Terminal）进入到当前bin目录路径，输入你的脚本名称.bat，回车</li>
+</ol>
+<pre><code>cd target\app\bin
+
+yunmo-biz-demo.bat
+</code></pre>
+<p>cmd<br>
+<img src="https://yunmo.org.cn/post-images/1599892586945.png" alt="" loading="lazy"><br>
+idea<br>
+<img src="https://yunmo.org.cn/post-images/1599892593469.png" alt="" loading="lazy"></p>
+<!-- more -->
+<h4 id="linux启动">linux启动</h4>
+<pre><code>./app/bin/yunmo-biz-demo
+
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://yunmo.org.cn/post-images/1599898585408.png" alt="" loading="lazy"></figure>
+<h2 id="5服务验证">5.服务验证</h2>
+<p>从启动的控制台找到你的端口和content path(springboot项目默认为'')<br>
+<img src="https://yunmo.org.cn/post-images/1599892803473.png" alt="" loading="lazy"><br>
+打开浏览器输入你的项目地址， ip:端口/content path，我这里content path为空可以不填，出现下面这个界面就表示成功了</p>
+<blockquote>
+<p>localhost:9101</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://yunmo.org.cn/post-images/1599893080040.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>localhost:9101/customerMessage/aboutMe</p>
+</blockquote>
+<figure data-type="image" tabindex="4"><img src="https://yunmo.org.cn/post-images/1599895758564.png" alt="" loading="lazy"></figure>
+<!-- more -->
+<p>🌈 以上就是全部步骤啦，有问题欢迎在下方给我留言~</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://yunmo.org.cn/tag/java/" class="tag">
+                    Java
+                  </a>
+                
+                  <a href="https://yunmo.org.cn/tag/maven/" class="tag">
+                    Maven
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://yunmo.org.cn/post/jenkins-schedule-build/">
+                  <h3 class="post-title">
+                    Jenkins定时构建Maven项目
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+  
+
+  
+
+
+
+
+  </body>
+</html>
